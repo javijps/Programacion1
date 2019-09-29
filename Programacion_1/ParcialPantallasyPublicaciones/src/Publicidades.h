@@ -12,21 +12,23 @@ typedef struct publicidad{
 
 	int id;
 	int status;
-	int cuitCliente; //cambiar a char cuando haga getCuit
+	char cuitCliente[50]; //cambiar a char cuando haga getCuit
 	int diasPublicacion;
-	char filePublicacion;
+	char filePublicacion[50];
 	int idPantalla;
 
 } publicidad;
 
 int initPublicidad(publicidad *aPublicidad, int cantidad);
-int getDatosPublicidad(publicidad *aPublicidad, int cantidad);//reemplazar getstring por get nombre, get strin x get direccion
-int buscarPublicidadLibre(publicidad *aPublicidad, int cantidad);
-int altaPublicidad(publicidad *aPublicidad, int cantidad);
 int imprimirPublicidades(publicidad *aPublicidad, int cantidad);
+int getDatosPublicidad(publicidad *aPublicidad, int cantidad);//reemplazar getstring por get nombre, get strin x get direccion
+int buscarPublicidadLibre(publicidad *aPublicidad,int cantidad);
+int contratarPublicidad(publicidad *aPublicidad, int cantidad,int idPantalla);
+
 int buscarPublicidadPorId(publicidad *aPublicidad, int cantidad,int cuit);
 int modificarPublicidadPorCuit(publicidad *aPublicidad, int cantidad,int cuit);
 int bajaPublicidadPorId(publicidad *aPublicidad, int cantidad,int cuit);
 
+//int contratarPublicidad(publicidad *aPublicidad, int cantidad,int idPantalla);
 //void pantallaForzada(pantalla *aPantalla,int cantidad);
 #endif /* PUBLICIDADES_H_ */

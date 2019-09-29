@@ -12,7 +12,7 @@
 #define MAX_FLOAT 1000
 #define QTY_CARACTERES 50
 
-//HACER FUNCION esNombre
+//HACER FUNCION getNombre/esNombre , getDireccion/esDireccion, getCuit/esCuit,etc. Corregir esNumerica
 
 /**
 * \brief Solicita numero entero al usuario y lo valida.

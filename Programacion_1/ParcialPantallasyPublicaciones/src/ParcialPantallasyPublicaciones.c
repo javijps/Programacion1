@@ -13,15 +13,18 @@
 #include <stdlib.h>
 #include <string.h>
 #include "Pantallas.h"
+#include "Publicidades.h"
 #include "utn.h"
 #define QTY_PANTALLAS 100
 #define CONTRATACIONES 1000
 
 int main(void) {
 
-	struct pantalla aPantalla[QTY_PANTALLAS];
-	//struct pantalla bPantalla;
-	int id = 2;
+	publicidad aPublicidad[QTY_PANTALLAS];
+	//publicidad bPublicidad;
+
+
+	imprimirPublicidades(aPublicidad,3);
 
 	return EXIT_SUCCESS;
 }

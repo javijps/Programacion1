@@ -19,7 +19,7 @@ typedef struct pantalla {
 } pantalla;
 
 int initPantalla(pantalla *aPantalla, int cantidad);
-int getDatosPantalla(struct pantalla *aPantalla,int cantidad);//reemplazar getstring por get nombre, get strin x get direccion
+int getDatosPantalla(struct pantalla *aPantalla,int cantidad);//reemplazar getstring por get nombre, get string x get direccion
 int buscarPantallaLibre(pantalla *aPantalla,int cantidad);
 int altaPantalla(struct pantalla *aPantalla, int cantidad);
 int buscarPantallaLibre(pantalla *aPantalla,int cantidad);
