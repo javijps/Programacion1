@@ -8,7 +8,7 @@
 #include <stdio_ext.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include "empleados.h"
 #define MAX_FLOAT 1000
 #define QTY_CARACTERES 50
 
@@ -253,7 +253,6 @@ int getString(char *pResultado,
 
 	return retorno;
 }
-
 
 
 //ARRAY FUNCTIONS
@@ -506,7 +505,7 @@ int getEmail(char *pEmail,int limite)
 * \return Si la cadena de caracteres recibida es numerica [1] o si no lo es[-1]
 */
 
-int esNumerica(char *cadena)
+/*int esNumerica(char *cadena)
 {
 	int retorno=-1;
 	int i=0;
@@ -526,5 +525,13 @@ int esNumerica(char *cadena)
 	}
 	return retorno;
 }
+
+int getMenuOptions(void)
+{
+
+
+
+	return retorno;
+}*/
 
 

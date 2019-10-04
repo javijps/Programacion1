@@ -6,21 +6,21 @@
 C_SRCS += \
 ../src/Pantallas.c \
 ../src/Publicidades.c \
-../src/TP_2.c \
+../src/TP_2_.c \
 ../src/empleados.c \
 ../src/utn.c 
 
 OBJS += \
 ./src/Pantallas.o \
 ./src/Publicidades.o \
-./src/TP_2.o \
+./src/TP_2_.o \
 ./src/empleados.o \
 ./src/utn.o 
 
 C_DEPS += \
 ./src/Pantallas.d \
 ./src/Publicidades.d \
-./src/TP_2.d \
+./src/TP_2_.d \
 ./src/empleados.d \
 ./src/utn.d 
 

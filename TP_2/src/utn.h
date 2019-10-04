@@ -54,6 +54,8 @@ int esCuit(char *pCuit);
 int getEmail(char *pEmail,int limite);//resolver contador barra
 int esEmail(char *pEmail);
 
+int getMenuOptions(void);
+
 
 //int getStringToInt(int *pResultado);
 

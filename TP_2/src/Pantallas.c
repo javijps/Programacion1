@@ -295,16 +295,15 @@ void pantallaForzada(pantalla *aPantalla,int cantidad){
 
 	int aId[] = {1,2,3,4,5};
 	int aStatus[] = {1,1,0,0,1};
-	char aNombre[][50] = {"Belgrano","Palermo","Recoleta","Microcentro","Barrio Parque"};
+	char aNombre[50] = {"Belgrano","Palermo","Recoleta","Microcentro","Barrio Parque"};
 	char aDireccion [][50] = {"Cabildo 5000","Santa Fe 4600","Callao 750","Suipacha 324", "Calle 435"};
 	float aPrecioPorDia[] = {500,1000,1500,2000,2500};
 	int aTipoPantalla[] = {1,1,2,2,1};
 	int i;
-	struct pantalla bPantalla;
 
 	for(i=0;i<cantidad;i++)
 	{
-		strncpy(bPantalla.nombrePantalla,aNombre[i],50);
+		strncpy(aPantalla.nombrePantalla,aNombre[i],50);
 		strncpy(bPantalla.direccionPantalla,aDireccion[i],50);
 		bPantalla.id = aId[i];
 		bPantalla.status = aStatus[i];
@@ -312,4 +311,5 @@ void pantallaForzada(pantalla *aPantalla,int cantidad){
 		bPantalla.tipoPantalla = aTipoPantalla[i];
 	}
 }
+
 */
