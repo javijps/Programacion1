@@ -46,8 +46,9 @@ int main(void) {
 				"3-Baja Cliente\n"
 				"4-Alta Aviso\n"
 				"5-Pausar Aviso\n"
-				"6-EXIT\n",
-				"Error\n",1,5,2);
+				"6-Reanudar Aviso\n"
+				"7-EXIT\n",
+				"Error\n",1,10,2);
 
 		//printClient(bClient,5);
 
@@ -113,9 +114,22 @@ int main(void) {
 				printf("ok");
 				printAviso(bAviso,5);
 			}
+			break;
+		case 6:
+			//getID publicacion
+			//printUNa publicacion
+			printAviso(bAviso,5);
+			if(reanudarAviso(bAviso,5,bClient,5)!=0)
+				printf("Pausado Incorrecto!!\n");
+			else
+			{
+				printf("ok");
+				printAviso(bAviso,5);
+			}
+			break;
 
 		}
-	}while(option!=6);
+	}while(option!=7);
 	return EXIT_SUCCESS;
 }
 

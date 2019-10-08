@@ -201,3 +201,42 @@ int pauseAviso(sAviso* listAviso, int lenAviso, int idAviso,sClient* listClient,
 	}
 	return retorno;
 }
+
+int reanudarAviso(sAviso* listAviso, int lenAviso, int idAviso,sClient* listClient,int lenCLient)//EL FIND ID DEBERIA SER DE PUBLICACIONES PAUSADAS
+{
+	int retorno = -1;
+	sAviso bAviso;
+	char respuesta;
+	int index;
+	int indexClient;
+
+	if(listAviso!=NULL && lenAviso>0 && getInt(&bAviso.idAviso,"Ingrese Id de la publicacion","Error!",1,100,2)==0)
+	{
+		index = findAvisoById(listAviso,lenAviso,bAviso.idAviso);//busco el aviso y lo guardo en index.
+		if(index!=-1)//si es un aviso que existe, para esto debo inicializar todo en -1
+		{
+			mostrarUnAviso(listAviso[index]);
+			if(listAviso[index].statusAviso==PUBLICACION_PAUSADA)//busco en la posicion index si el aviso es activo
+			{
+				bAviso = listAviso[index];//guardo el aviso en un buffer
+				indexClient = findClientById(listClient,lenCLient,bAviso.idCliente); //a partir del buffer, tomo el id de cliente y busco en el array cliente
+				printf("encontrado!!\n");
+				printClient(listClient,lenCLient);//hacer funcion printUNSOLOCLIENTE.
+				getLetter(&respuesta,"Para confirmar la reanudacion de la publicacion ingrese s\n,"
+						"de lo contrario, ingrese \n",
+						"Error, respuesta incorrecta\n",2);
+				if(respuesta=='s')
+				{
+					listAviso[index].statusAviso = PUBLICACION_ACTIVA;
+					printf("Publicacion reanudada!!!\n");
+					retorno = 0;
+				}
+				else
+				{
+					printf("OPeracion cancelada!!\n");
+				}
+			}
+		}
+	}
+	return retorno;
+}
