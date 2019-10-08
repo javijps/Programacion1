@@ -29,7 +29,7 @@ int addAviso(sAviso *list,int len);
 int removeAviso(sAviso *list, int len, int id);
 int printAviso(sAviso *list, int len);
 int findAvisoById(sAviso* list, int len,int id);
-
+void mostrarUnAviso(sAviso miAviso);
 void avisoForzado(sAviso *list,int cantidad);
 
 

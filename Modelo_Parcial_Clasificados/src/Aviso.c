@@ -69,6 +69,14 @@ int printAviso(sAviso *list, int len)
 	return retorno;
 }
 
+void mostrarUnAviso(sAviso miAviso)
+{
+    printf("ID Aviso%d - id Cliente %d - Numero de rubro %d - Status Aviso %d - Texto aviso %s\n",miAviso.idAviso,miAviso.idCliente,
+    		miAviso.numeroRubro, miAviso.statusAviso,miAviso.textoAviso);
+}
+
+
+
 /**
 * \brief Genera el ID correspondiente a una pantalla.
 * \return Devuelve el ID correspondiente.
@@ -162,25 +170,19 @@ int pauseAviso(sAviso* listAviso, int lenAviso, int idAviso,sClient* listClient,
 	char respuesta;
 	int index;
 	int indexClient;
-	/*pedir numero de publicacion
-	 * con ese numero, buscar el cliente correspondiente//machear las 2 listas
-	 * imprimir la info de ese cliente
-	 * cambiar el estado de la publicacion a pausada
-	 */
 
 	if(listAviso!=NULL && lenAviso>0 && getInt(&bAviso.idAviso,"Ingrese Id de la publicacion","Error!",1,100,2)==0)
-	{//tomo el ID  de la publicacion
+	{
 		index = findAvisoById(listAviso,lenAviso,bAviso.idAviso);//busco el aviso y lo guardo en index.
 		if(index!=-1)//si es un aviso que existe, para esto debo inicializar todo en -1
 		{
+			mostrarUnAviso(listAviso[index]);
 			if(listAviso[index].statusAviso==PUBLICACION_ACTIVA)//busco en la posicion index si el aviso es activo
 			{
 				bAviso = listAviso[index];//guardo el aviso en un buffer
 				indexClient = findClientById(listClient,lenCLient,bAviso.idCliente); //a partir del buffer, tomo el id de cliente y busco en el array cliente
-
 				printf("encontrado!!\n");
 				printClient(listClient,lenCLient);//hacer funcion printUNSOLOCLIENTE.
-
 				getLetter(&respuesta,"Para confirmar el pausado de la publicacion ingrese s\n,"
 						"de lo contrario, ingrese \n",
 						"Error, respuesta incorrecta\n",2);
