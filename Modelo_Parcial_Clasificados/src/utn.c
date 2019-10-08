@@ -412,5 +412,72 @@ int getApellido(char pApellido[50],int limite,int reintentos)
 	return retorno;
 }
 
+int esNumerico(char str[])
+{
+	int retorno = -1;
+	int i=0;
+	while(str[i] != '\0')
+	{
+		if(str[i] < '0' || str[i] > '9')
+			retorno = 0;
+		i++;
+	}
+	return retorno;
+}
+
+int esCuit(char str[])
+{
+	int retorno = -1;
+	int i=0;
+	while(str[i] != '\0')
+	{
+		if(str[i] < '0' || str[i] > '9')
+			retorno = 0;
+		i++;
+	}
+	if(i<9||i>11)
+			{
+				retorno = -1;
+				printf("\nNumero de cuit incorrecto!\n");
+			}
+	return retorno;
+}
+/**
+ * \brief Solicita un texto numérico al usuario y lo devuelve
+ * \param mensaje Es el mensaje a ser mostrado
+ * \param input Array donde se cargará el texto ingresado
+ * \return 1 si el texto contiene solo números
+ */
+int getStringNumeros(char *input)
+{
+	int retorno = -1;
+    char aux[256];
+    getString(aux,"\nIngrese cuit sin / ni -\n","Cuit incorrecto",0,12,3);
+    if(esNumerico(aux))
+    {
+        strncpy(input,aux,50);
+        return 0;
+    }
+    return retorno;
+}
+
+/**
+ * \brief Solicita un texto numérico al usuario y lo devuelve
+ * \param mensaje Es el mensaje a ser mostrado
+ * \param input Array donde se cargará el texto ingresado
+ * \return 1 si el texto contiene solo números
+ */
+int getCuit(char *input)
+{
+	int retorno = -1;
+    char aux[256];
+    getString(aux,"\nIngrese cuit sin / ni -\n","Cuit incorrecto",11,12,3);
+    if(esCuit(aux))
+    {
+        strncpy(input,aux,50);
+        return 0;
+    }
+    return retorno;
+}
 
 

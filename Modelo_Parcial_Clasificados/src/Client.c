@@ -31,6 +31,7 @@ int initClient(sClient *list, int len){
 		for(i=0;i<len;i++)
 		{
 			list[i].statusClient = STATUS_EMPTY;
+
 		}
 		retorno = 0;
 	}
@@ -54,7 +55,7 @@ int printClient(sClient *list, int len)
 
 		for(i=0;i<len;i++)
 		{
-			//if(list[i].statusClient==STATUS_EMPTY)
+			//if(list[i].statusClient==STATUS_EMPTY)//PARA IMPRIMIR SOLO ACTIVOS
 				//continue;
 			printf("\n Id: %d - Name: %s - Last name: %s - Cuit: %s - Status: %d \n",
 					list[i].idCLient,list[i].name,list[i].lastName,list[i].cuit,list[i].statusClient);
@@ -188,34 +189,6 @@ int addClient(sClient* list,int len)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 void clienteForzado(sClient *list,int cantidad){
 
 	int aId[] = {1,2,3,4,5};
@@ -285,9 +258,7 @@ int modifyClientById(sClient* list,int len,int id)
 				}
 				break;
 			case 'c':
-				if(getString(bClient.cuit,"Ingrese cuit del cliente, sin - ni /\n",
-						"Error, el cuit ingresado es incorrecto\n",
-						1,49,2)!=0)
+				if(getCuit(bClient.cuit)!=0)
 				{
 					printf("No se pudo modificar el apellido");
 					retorno = -1;
@@ -303,6 +274,35 @@ int modifyClientById(sClient* list,int len,int id)
 			}
 		}while(option!='e');
 
+	}
+	return retorno;
+
+}
+
+/** \brief Remove a Client by Id (put isEmpty Flag in 1)
+*
+* \param list Client*
+* \param len int
+* \param id int
+* \return int Return (-1) if Error [Invalid length or NULL pointer or if can't
+find a Client] - (0) if Ok
+*
+*/
+int removeClient(sClient* list, int len, int id)
+{
+
+	int retorno = -1;
+	int index=0;
+
+	if(list != NULL && len>0)
+	{
+		index = findClientById(list,len,id);
+
+		if(index!=-1)
+		{
+			list[index].statusClient = STATUS_EMPTY;
+			retorno = 0;
+		}
 	}
 	return retorno;
 

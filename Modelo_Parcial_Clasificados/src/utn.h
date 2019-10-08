@@ -42,6 +42,10 @@ int getNombre(char pNombre[50],int limite,int reintentos);
 int esNombre(char pNombre[50]);
 int getApellido(char pApellido[50],int limite,int reintentos);
 int esApellido(char pApellido[50]);
+int getStringNumeros(char *input);
+int esNumerico(char str[]);
+int esCuit(char str[]);
+int getCuit(char *input);
 
 
 #endif /* UTN_H_ */
