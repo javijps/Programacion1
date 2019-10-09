@@ -315,3 +315,9 @@ void pantallaForzada(pantalla aPantalla[],int cantidad){
 
 }
 
+typedef struct sCliente{
+
+	char cuit[15];
+	int acumuladorFacturasApagar;
+};
+
