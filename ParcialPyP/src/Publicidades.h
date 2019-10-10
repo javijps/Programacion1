@@ -21,13 +21,16 @@ typedef struct publicidad{
 
 int initPublicidad(publicidad *aPublicidad, int cantidad);
 int imprimirPublicidades(publicidad *aPublicidad, int cantidad);
-int getDatosPublicidad(publicidad *aPublicidad, int cantidad);//reemplazar getstring por get nombre, get strin x get direccion
+int getDatosPublicidad(publicidad *aPublicidad, int cantidad,int idPantalla);//reemplazar getstring por get nombre, get strin x get direccion
 int buscarPublicidadLibre(publicidad *aPublicidad,int cantidad);
 int contratarPublicidad(publicidad *aPublicidad, int cantidad,int idPantalla);
-int buscarPublicidadPorId(publicidad *aPublicidad, int cantidad,int cuit);//testear
+int buscarPublicidadesPorCuit(publicidad *aPublicidad, int cantidad,char *cuit);
+int buscarPublicidadPorId(publicidad *aPublicidad, int cantidad,int id);
 int bajaPublicidadPorId(publicidad *aPublicidad, int cantidad,int cuit);
 void publicidadesForzadas(publicidad aPublicidad[],int cantidad);
+void imprimirUnaPublicidad(publicidad miPublicidad);
 
+int buscarPublicidadPorIdPantallaYcuit(publicidad *aPublicidad, int cantidad,int idPantalla,char *cuit);
 int modificarPublicidadPorCuit(publicidad *aPublicidad, int cantidad,int cuit);
 
 //int contratarPublicidad(publicidad *aPublicidad, int cantidad,int idPantalla);

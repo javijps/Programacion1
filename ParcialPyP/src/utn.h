@@ -32,11 +32,6 @@ int getLetter(   char *pChar,
 		      char *mensaje,
 			  char *mensajeError,
 			  int reintentos);
-//float esDecimal(float *numero);
-int initArrayInt(int array[],int limite,int valor);
-int getStringToInt(int *pResultado);
-int imprimeArrayInt(int array[],int limite);
-int esNumerica(char *cadena);
 int getArrayInt(	int array[],
 					int limite,
 					char *pMensaje,
@@ -50,10 +45,9 @@ int getString(char *pResultado,
 			  int minimo,
 			  int maximo,
 			  int reintentos);
-int imprimeArrayString(char aArray[][50],int limite);
 int getNombre(char *pResultado,int limite);
-
-
-
+int getStringToInt(int *pResultado);
+int imprimeArrayInt(int array[],int limite);
+int esNumerica(char *cadena);
 
 #endif /* UTN_H_ */

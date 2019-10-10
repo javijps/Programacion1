@@ -7,6 +7,7 @@
 
 #ifndef PANTALLAS_H_
 #define PANTALLAS_H_
+#include "Publicidades.h"
 
 typedef struct pantalla {
 
@@ -19,15 +20,17 @@ typedef struct pantalla {
 } pantalla;
 
 int initPantalla(pantalla *aPantalla, int cantidad);
-int getDatosPantalla(struct pantalla *aPantalla,int cantidad);//reemplazar getstring por get nombre, get string x get direccion
+int getDatosPantalla(struct pantalla *aPantalla,int cantidad);
 int buscarPantallaLibre(pantalla *aPantalla,int cantidad);
 int altaPantalla(struct pantalla *aPantalla, int cantidad);
-int buscarPantallaLibre(pantalla *aPantalla,int cantidad);
-int imprimirPantallas(pantalla *aPantalla, int cantidad);
+int imprimirPantallas(pantalla *aPantalla, int cantidad);//activas. cambiar si se necesita inactivas o pausadas
 int buscarPantallaPorId(pantalla *aPantalla,int cantidad,int id);
 int modificarPantallaPorId(pantalla *aPantalla, int cantidad,int id);
 int bajaPantallaPorId(pantalla *aPantalla,int cantidad,int id);
+
+int imprimirPantallasPorCuit(pantalla *aPantalla, int lenApantalla,publicidad *aPublicidad, int lenApublicidad,char *cuitCliente);
 void pantallaForzada(pantalla *aPantalla,int cantidad);
+void imprimirUnaPantallaPorId(pantalla *aPantalla,int cantidad,int id);
 
 
 #endif /* PANTALLAS_H_ */

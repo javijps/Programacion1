@@ -97,7 +97,7 @@ int buscarPublicidadLibre(publicidad *aPublicidad,int cantidad)
 	return retorno;
 }
 
-int getDatosPublicidad(publicidad *aPublicidad,int cantidad){//falta getCuit, getFile,
+int getDatosPublicidad(publicidad *aPublicidad,int cantidad, int idPantalla){//REVISAR EL ID
 
 	int retorno = -1;
 	struct publicidad bPublicidad;
@@ -121,6 +121,7 @@ int getDatosPublicidad(publicidad *aPublicidad,int cantidad){//falta getCuit, ge
 		strncpy(aPublicidad[i].filePublicacion,bPublicidad.filePublicacion,50);
 		aPublicidad[i].id = generarIdPublicidad();
 		aPublicidad[i].status = STATUS_NOT_EMPTY;
+		aPublicidad[i].idPantalla = idPantalla;
 
 		retorno = 0;
 	}
@@ -144,7 +145,7 @@ int contratarPublicidad(publicidad *aPublicidad, int cantidad,int idPantalla)
 		index = buscarPublicidadLibre(aPublicidad,cantidad);
 		if(index!=-1)
 		{
-			if(getDatosPublicidad(aPublicidad,1)==0)
+			if(getDatosPublicidad(aPublicidad,1,3)==0)//ID PARA EVITAR ERROR, CORREGIR FUNCION
 			{
 				aPublicidad[index].id = generarIdPublicidad();
 				aPublicidad[index].status = STATUS_NOT_EMPTY;
@@ -158,6 +159,17 @@ int contratarPublicidad(publicidad *aPublicidad, int cantidad,int idPantalla)
 	return retorno;
 }
 
+void imprimirUnaPublicidad(publicidad miPublicidad)
+{
+    printf("Id Publicidad: %d\n -- Cuit Cliente: %s\n -- Dias Publicacion: %d\n -- Archivo Publicidad: %s\n -- Status publicidad: %d\n",
+			miPublicidad.id,
+			miPublicidad.cuitCliente,
+			miPublicidad.diasPublicacion,
+			miPublicidad.filePublicacion,
+			miPublicidad.status);
+}
+
+
 /**
 * \brief Busca una pantalla existente por medio de su ID.
 * \param pantalla *aPantalla puntero a una xxxxx de la estructura pantalla.
@@ -165,24 +177,88 @@ int contratarPublicidad(publicidad *aPublicidad, int cantidad,int idPantalla)
 * \param id ID de pantalla a ser encontrada.
 * \return Si tuvo exito al encontrar la pantalla indicada devuelve [0] o si fallo [-1]
 */
-int buscarPublicidadPorId(publicidad *aPublicidad, int cantidad,int cuit)
+int buscarPublicidadPorId(publicidad *aPublicidad, int cantidad,int id)
 {
 	int retorno = -1;
 	int i;
+	struct publicidad bPublicidad;
+	//char bCuit[50];
 
 	if(aPublicidad!=NULL && cantidad>0)
 	{
 		for(i=0;i<cantidad;i++)
 		{
-			if(aPublicidad[i].cuitCliente == cuit && aPublicidad[i].status == STATUS_NOT_EMPTY)
+			if(aPublicidad[i].status == STATUS_NOT_EMPTY)
 			{
-				retorno = i;
-				break;
+				if(aPublicidad[i].id==id)
+				{
+					retorno = 0;
+					bPublicidad = aPublicidad[i];
+					imprimirUnaPublicidad(bPublicidad);
+					break;
+				}
 			}
-			//else
-				//printf("ID no encontrado!!!\n");
 		}
+
 	}
+	return retorno;
+}
+
+int buscarPublicidadPorIdPantallaYcuit(publicidad *aPublicidad, int cantidad,int idPantalla,char *cuit)
+{
+	int retorno = -1;
+	int i;
+	struct publicidad bPublicidad;
+	//char bCuit[50];
+
+	if(aPublicidad!=NULL && cantidad>0)
+	{
+		for(i=0;i<cantidad;i++)
+		{
+			if(aPublicidad[i].status == STATUS_NOT_EMPTY)
+			{
+				if((aPublicidad[i].idPantalla==idPantalla) && (strcmp(aPublicidad[i].cuitCliente,cuit)==0))
+				{
+					retorno = i;
+					bPublicidad = aPublicidad[i];
+					imprimirUnaPublicidad(bPublicidad);
+					break;
+				}
+			}
+		}
+
+	}
+	return retorno;
+}
+
+/**
+* \brief Busca una pantalla existente por medio de su ID.
+* \param pantalla *aPantalla puntero a una xxxxx de la estructura pantalla.
+* \param cantidad Cantidad de pantallas.
+* \param id ID de pantalla a ser encontrada.
+* \return Si tuvo exito al encontrar la pantalla indicada devuelve [0] o si fallo [-1]
+*/
+int buscarPublicidadesPorCuit(publicidad *aPublicidad, int cantidad,char *cuit)
+{
+	int retorno = -1;
+	int i;
+	struct publicidad bPublicidad;
+
+		if(aPublicidad!=NULL && cantidad>0)
+		{
+			for(i=0;i<cantidad;i++)
+			{
+				if(aPublicidad[i].status == STATUS_NOT_EMPTY)
+				{
+					if(strncmp(aPublicidad[i].cuitCliente,cuit,50)==0)
+					{
+						retorno = i;
+						bPublicidad = aPublicidad[i];
+						break;
+					}
+				}
+			}
+			}
 	return retorno;
 }
 
@@ -194,7 +270,7 @@ int bajaPublicidadPorId(publicidad *aPublicidad,int cantidad,int id)
 
 	if(aPublicidad != NULL && cantidad>0)
 	{
-		index = buscarPantallaPorId(aPublicidad,cantidad,id);
+		index = buscarPublicidadPorId(aPublicidad,cantidad,id);
 
 		if(index!=-1)
 		{
@@ -205,14 +281,15 @@ int bajaPublicidadPorId(publicidad *aPublicidad,int cantidad,int id)
 	return retorno;
 }
 
+
 void publicidadesForzadas(publicidad aPublicidad[],int cantidad){
 
 	int aId[] = {1,2,3,4,5};
 	int aStatus[] = {1,1,1,1,1};
-	char aCuitCliente[][50] = {"20322670355","25322840657","15646543544","302763505","43241987256"};
-	char  aFilePublicacion[][50] = {};
+	char aCuitCliente[][50] = {"20322670355","25322840657","20322670355","302763505","43241987256"};
+	char  aFilePublicacion[][50] = {"yogur.avi","super.avi","fotos.avi","shampoo.avi","hola,avi"};
 	int aDiasPublicacion[] = {5,4,9,2,3};
-	int aIdPantalla[] = {};
+	int aIdPantalla[] = {1,2,3,4,5};
 	int i;
 
 	for(i=0;i<cantidad;i++)
@@ -228,3 +305,16 @@ void publicidadesForzadas(publicidad aPublicidad[],int cantidad){
 
 
 }
+
+
+/*
+void mostrarUnaPublicidad(publicidad miPublicidad)
+{
+	printf("ID Aviso%d - Status Publicidad %d - Cuit Cliente %s - Dias de publicacion %d - Archivo publicacion %s\n",
+			miPublicidad.id,
+			miPublicidad.status,
+			miPublicidad.cuitCliente,
+			miPublicidad.diasPublicacion,
+			miPublicidad.filePublicacion);
+}
+*/

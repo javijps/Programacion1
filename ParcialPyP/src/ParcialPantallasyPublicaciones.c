@@ -18,38 +18,104 @@
 #define QTY_PANTALLAS 100
 #define CONTRATACIONES 1000
 
-int main(void) {
-//2. Cliente con importe más alto a facturar (si hay más de uno indicar el primero)
+int main(void){
 
-//como publicidad tiene a pantalla, recorro 1ro publicidad, xq tengo el ID de pantalla.. pantalla tiene el precio
-
-	int mayorPrecioFacturado(pantalla *listPantalla, int lenPantalla, publicidad *listPublicidad,int lenPublicidad)
+	char bCuitCLiente[50];
+	int option;
+	int idPantalla;
+	//pantalla aPantalla[MAX_CLIENT];
+	pantalla bPantalla[5];
+	//publicidad apublicidad[MAX_CLIENT];
+	publicidad bpublicidad[5];
+	pantallaForzada(bPantalla,5);
+	publicidadesForzadas(bpublicidad,5);
+	//initPantalla(bPublicidad,MAX_CLIENT);
+	//initPublicidad(aPublicidad,MAX_CLIENT);
+	do
 	{
-		int retorno = -1;
-		int i;
-		int j;
-		int posicionPantalla;
-		int precioTotalPublicacion;
-		struct sCliente bCliente;
 
+		getInt(&option,"\n---------------------\n"
+				"Ingrese:\n"
+				"1-Alta Pantalla\n"
+				"2-Modificar Pantalla\n"
+				"3-Baja Pantalla\n"
+				"4-Contratar Publicidad\n"
+				"5-Modificar condiciones de publicidad\n"
+				"6-Cancelar condiciones de publicidad\n"
+				"7-Consulta de facturacion\n"
+				"8-Listar Contrataciones\n"
+				"9-Listar Pantallas Existentes\n"
+				"10-Informar\n"
+				"  a-Lista​r cliente​ ​ con contrataciones​ ​ e ​importe​ ​a pagar​ ​por​ ​contratacion\n."
+				"  b-Cliente con importe mas alto a facturar\n"
+				"11-EXIT\n",
+				"Error\n",1,12,2);
 
-		if((listPantalla!=NULL && lenPantalla>0) && (listPublicidad!=NULL && lenPublicidad>0))
+		switch(option)
 		{
-			for(i=0;i<lenPublicidad;i++)//con posicionPantalla macheo el id pantalla de la publicacion, con la pantalla de ese id. es la conexion
-			//despues calculo el precio de esa publicidad
+		case 1:
+			if(altaPantalla(bPantalla,5)==0)//que no sea forzada.aPantalla
+				printf("\nAlta exitosa\n");
+			else
+				printf("\nNo fue posible realizar el alta\n");
+			imprimirPantallas(bPantalla,5);
+			break;
+		case 2:
+			getInt(&idPantalla,"\nIngrese ID de la pantalla a modificar\n","Error\n",1,1000,2);
+			if(modificarPantallaPorId(bPantalla,5,idPantalla)!=0)
+				printf("\nNo fue posible realizar la modificacion\n");
+			else
+				printf("\nModificacion Exitosa\n!");
+			imprimirPantallas(bPantalla,5);//es para chequear, borrar de ser necesario
+			break;
+		case 3:
+			if(bajaPantallaPorId(bPantalla,5,idPantalla)!=0)
+				printf("\nNo fue posible realiza la baja!\n");
+			else
+				printf("Baja Exitosa!");
+			imprimirPantallas(bPantalla,5);
+			break;
+		case 4:
+			imprimirPantallas(bPantalla,5);
+			if(getInt(&idPantalla,"Ingrese ID de la pantalla a contratar\n","Error\n",1,1000,2)==0)
 			{
-				posicionPantalla = buscarPantallaPorId(listPantalla,lenPantalla,listPublicidad[i].idPantalla);
-				precioTotalPublicacion = listPublicidad[i].diasPublicacion * listPantalla[posicionPantalla].precioPorDia;
-
+				if(getDatosPublicidad(bpublicidad,1,idPantalla)!=0)
+					printf("\nNo fue posible contratar la publicidad!!\n");
+				else
+					printf("\nPublicidad contratada exitosamente!\n");
 			}
-			//faltaria acumular
+			imprimirPublicidades(bpublicidad,5);
+			break;
+		case 5:
+			if(getString(bCuitCLiente,"Ingrese cuit Cliente\n",
+					"Error, el cuit ingresado no corresponde\n"
+					,1,50,3)==0)//getcuit
+			{
+				if(imprimirPantallasPorCuit(bPantalla,5,bpublicidad,5,bCuitCLiente)!=0)
+					printf("No fue posible imprimir las pantallas!\n");
+			}
+			break;
+		case 6://mismas funciones punto 5 con modificacion para la baja
+			break;
+			//case 7. buscarPublicidadPOrCUit, despues calcular la facturacion
+			//(publicidad.dias contratados * pantalla.precio por dia), guardarla en sAuxiliar e imprimir el array o similar.
+			//case 8 listar contrataciones. Imprimir publicidad con los campos especificados.
+			//case 9 listar pantallas con todos sus campos.
+			//case 10_1 listar cliente(estructura auxiliar cliente con contador de contrataciones y monto de cada una) o similar
+			//case 10_2 usar punto anteriror para hacer un acumulador de facturas para calcular la facturacion total por cliente y calcular maximo
 		}
-		return retorno;
-	}
+	}while(option!=11);
+	/*
+		imprimirPublicidades(bpublicidad,5);
+		imprimirPantallas(bPantalla,5);
+		if(getString(bCuitCLiente,"Ingrese cuit\n",
+				"Error, el cuit ingresado no corresponde\n"
+				,1,50,3)==0)
+		{
 
-//if cuit es igual, acumulo la facturacion
-	return EXIT_SUCCESS;
-
+				printf("FUNCIONA!");
+			else
+				printf("no funciona");
+		}
+*/	return EXIT_SUCCESS;
 }
-
-
