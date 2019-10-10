@@ -43,6 +43,8 @@ int imprimirPantallasPorCuitConFacturacionPorPublicidad(pantalla *aPantalla,
 												  publicidad *aPublicidad,
 												  int lenApublicidad,
 												  char *cuitCliente);
+int listarDatosPantallaYpublicidad(pantalla *aPantalla,int lenApantalla,publicidad *aPublicidad,int lenApublicidad);
+
 void pantallaForzada(pantalla *aPantalla,int cantidad);
 
 #endif /* PANTALLAS_H_ */

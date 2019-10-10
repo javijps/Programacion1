@@ -320,15 +320,3 @@ void publicidadesForzadas(publicidad aPublicidad[],int cantidad){
 
 }
 
-
-/*
-void mostrarUnaPublicidad(publicidad miPublicidad)
-{
-	printf("ID Aviso%d - Status Publicidad %d - Cuit Cliente %s - Dias de publicacion %d - Archivo publicacion %s\n",
-			miPublicidad.id,
-			miPublicidad.status,
-			miPublicidad.cuitCliente,
-			miPublicidad.diasPublicacion,
-			miPublicidad.filePublicacion);
-}
-*/

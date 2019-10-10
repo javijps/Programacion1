@@ -46,8 +46,8 @@ int main(void){
 				"8-Listar Contrataciones\n"
 				"9-Listar Pantallas Existentes\n"
 				"10-Informar\n"
-				"  a-Lista​r cliente​ ​ con contrataciones​ ​ e ​importe​ ​a pagar​ ​por​ ​contratacion\n."
-				"  b-Cliente con importe mas alto a facturar\n"
+				"  1-Lista​r cliente​ ​ con contrataciones​ ​ e ​importe​ ​a pagar​ ​por​ ​contratacion\n."
+				"  2-Cliente con importe mas alto a facturar\n"
 				"11-EXIT\n",
 				"Error\n",1,12,2);
 
@@ -117,7 +117,9 @@ int main(void){
 					printf("\nCuit no encontrado!\n");
 			}
 			break;
-
+		case 8:
+			if(listarDatosPantallaYpublicidad(bPantalla,5,bpublicidad,5)!=0)
+				printf("Error al listar!\n");
 			break;
 
 			//case 7. buscarPublicidadPOrCUit, despues calcular la facturacion

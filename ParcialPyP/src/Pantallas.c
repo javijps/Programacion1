@@ -453,3 +453,34 @@ int imprimirPantallasPorCuitConFacturacionPorPublicidad(pantalla *aPantalla,
 	}
 	return retorno;
 }
+
+int listarDatosPantallaYpublicidad(pantalla *aPantalla,int lenApantalla,publicidad *aPublicidad,int lenApublicidad)
+{
+	int retorno = -1;
+	int i;
+	int j;
+
+	if(aPublicidad!=NULL && lenApublicidad>0 && aPantalla!=NULL && lenApantalla>0)
+	{
+		for(i=0;i<lenApantalla;i++)
+		{
+			for(j=0;j<lenApublicidad;j++)
+			{
+				if(aPantalla[i].id == aPublicidad[j].idPantalla)
+				{
+					printf("\n"
+							"-- Nombre Pantalla: %s\n "
+							"-- Nombre de video %s\n"
+							"-- Cantidad de dias %d\n"
+							"-- Cuit Cliente %s\n\n",
+							aPantalla[i].nombrePantalla,
+							aPublicidad[j].filePublicacion,
+							aPublicidad[j].diasPublicacion,
+							aPublicidad[j].cuitCliente);
+					retorno=0;
+				}
+			}
+		}
+	}
+	return retorno;
+}
