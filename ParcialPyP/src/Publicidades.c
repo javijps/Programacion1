@@ -168,7 +168,21 @@ void imprimirUnaPublicidad(publicidad miPublicidad)
 			miPublicidad.filePublicacion,
 			miPublicidad.status);
 }
-
+void imprimirUnaPublicidadConPrecio(publicidad miPublicidad,float precioPublicidad)
+{
+    printf("\nId Publicidad: %d\n"
+    		" -- Cuit Cliente: %s\n"
+    		" -- Dias Publicacion: %d\n"
+    		" -- Archivo Publicidad: %s\n"
+    		" -- Status publicidad: %d\n "
+    		" -- Precio Publicidad: $%.2f\n",
+			miPublicidad.id,
+			miPublicidad.cuitCliente,
+			miPublicidad.diasPublicacion,
+			miPublicidad.filePublicacion,
+			miPublicidad.status,
+			precioPublicidad);
+}
 
 /**
 * \brief Busca una pantalla existente por medio de su ID.

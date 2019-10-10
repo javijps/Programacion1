@@ -91,14 +91,37 @@ int main(void){
 					"Error, el cuit ingresado no corresponde\n"
 					,1,50,3)==0)//getcuit
 			{
-				if(imprimirPantallasPorCuit(bPantalla,5,bpublicidad,5,bCuitCLiente)!=0)
+				if(imprimirPantallasPorCuitYmodificarDiasContratados(bPantalla,5,bpublicidad,5,bCuitCLiente)!=0)
 					printf("No fue posible imprimir las pantallas!\n");
 			}
 			break;
-		case 6://mismas funciones punto 5 con modificacion para la baja
+		case 6:
+			if(getString(bCuitCLiente,"Ingrese cuit Cliente\n",
+					"Error, el cuit ingresado no corresponde\n"
+					,1,50,3)==0)//getcuit
+			{
+				if(imprimirPantallasPorCuitYcancelarContratacion(bPantalla,5,bpublicidad,5,bCuitCLiente)!=-1)
+					printf("\nBaja Exitosa\n");
+				else
+					printf("\nBaja fallida\n");
+			}
 			break;
+		case 7:
+			if(getString(bCuitCLiente,"Ingrese cuit Cliente\n",
+					"Error, el cuit ingresado no corresponde\n"
+					,1,50,3)==0)//getcuit
+			{
+				if(imprimirPantallasPorCuitConFacturacionPorPublicidad(bPantalla,5,bpublicidad,5,bCuitCLiente)==0)
+					printf("\nPrint Exitoso\n");
+				else
+					printf("\nCuit no encontrado!\n");
+			}
+			break;
+
+			break;
+
 			//case 7. buscarPublicidadPOrCUit, despues calcular la facturacion
-			//(publicidad.dias contratados * pantalla.precio por dia), guardarla en sAuxiliar e imprimir el array o similar.
+		//(publicidad.dias contratados * pantalla.precio por dia), guardarla en sAuxiliar e imprimir el array o similar.
 			//case 8 listar contrataciones. Imprimir publicidad con los campos especificados.
 			//case 9 listar pantallas con todos sus campos.
 			//case 10_1 listar cliente(estructura auxiliar cliente con contador de contrataciones y monto de cada una) o similar

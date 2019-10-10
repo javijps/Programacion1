@@ -27,10 +27,22 @@ int imprimirPantallas(pantalla *aPantalla, int cantidad);//activas. cambiar si s
 int buscarPantallaPorId(pantalla *aPantalla,int cantidad,int id);
 int modificarPantallaPorId(pantalla *aPantalla, int cantidad,int id);
 int bajaPantallaPorId(pantalla *aPantalla,int cantidad,int id);
-
-int imprimirPantallasPorCuit(pantalla *aPantalla, int lenApantalla,publicidad *aPublicidad, int lenApublicidad,char *cuitCliente);
-void pantallaForzada(pantalla *aPantalla,int cantidad);
 void imprimirUnaPantallaPorId(pantalla *aPantalla,int cantidad,int id);
-
+int imprimirPantallasPorCuitYmodificarDiasContratados(pantalla *aPantalla,
+		                                              int lenApantalla,
+													  publicidad *aPublicidad,
+													  int lenApublicidad,
+													  char *cuitCliente);
+int imprimirPantallasPorCuitYcancelarContratacion(pantalla *aPantalla,
+		                                          int lenApantalla,
+												  publicidad *aPublicidad,
+												  int lenApublicidad,
+												  char *cuitCliente);
+int imprimirPantallasPorCuitConFacturacionPorPublicidad(pantalla *aPantalla,
+		                                          int lenApantalla,
+												  publicidad *aPublicidad,
+												  int lenApublicidad,
+												  char *cuitCliente);
+void pantallaForzada(pantalla *aPantalla,int cantidad);
 
 #endif /* PANTALLAS_H_ */

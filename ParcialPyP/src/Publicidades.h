@@ -29,10 +29,9 @@ int buscarPublicidadPorId(publicidad *aPublicidad, int cantidad,int id);
 int bajaPublicidadPorId(publicidad *aPublicidad, int cantidad,int cuit);
 void publicidadesForzadas(publicidad aPublicidad[],int cantidad);
 void imprimirUnaPublicidad(publicidad miPublicidad);
-
 int buscarPublicidadPorIdPantallaYcuit(publicidad *aPublicidad, int cantidad,int idPantalla,char *cuit);
 int modificarPublicidadPorCuit(publicidad *aPublicidad, int cantidad,int cuit);
 
-//int contratarPublicidad(publicidad *aPublicidad, int cantidad,int idPantalla);
-//void pantallaForzada(pantalla *aPantalla,int cantidad);
+void imprimirUnaPublicidadConPrecio(publicidad miPublicidad,float precioPublicidad);
+
 #endif /* PUBLICIDADES_H_ */

@@ -330,11 +330,13 @@ void imprimirUnaPantallaPorId(pantalla *aPantalla,int cantidad,int id)
 		}
 }
 
-int imprimirPantallasPorCuit(pantalla *aPantalla, int lenApantalla,publicidad *aPublicidad, int lenApublicidad,char *cuitCliente)
+
+//FUNCIONES INFORMES
+
+
+int imprimirPantallasPorCuitYmodificarDiasContratados(pantalla *aPantalla, int lenApantalla,publicidad *aPublicidad, int lenApublicidad,char *cuitCliente)
 {
-	//pantalla aPantalla[100]
-	//struct publicidad auxPublicidad;
-	int retorno = 0;
+	int retorno = -1;
 	int j;
 	int indexPublicidad;
 	int indexPantalla;
@@ -373,76 +375,81 @@ int imprimirPantallasPorCuit(pantalla *aPantalla, int lenApantalla,publicidad *a
 	return retorno;
 }
 
-
-
-
-/*
-int imprimirPantallasPorCuit(pantalla *aPantalla, int lenApantalla,publicidad *aPublicidad, int lenApublicidad,char *cuitCliente){
-
+int imprimirPantallasPorCuitYcancelarContratacion(pantalla *aPantalla,
+		                                          int lenApantalla,
+												  publicidad *aPublicidad,
+												  int lenApublicidad,
+												  char *cuitCliente)
+{
 	int retorno = -1;
-	int indexPublicidad;
-	int i;
 	int j;
-	struct pantalla bPantalla;
+	int indexPublicidad;
+	int indexPantalla;
+	int auxIdPantalla;
+	int confirmaBajaContratacion;
 
-
-
-	if(indexPublicidad!=-1)
-	{
-
-	for(i=0;i<lenApantalla;i++)
+	indexPublicidad = buscarPublicidadesPorCuit(aPublicidad,lenApublicidad,cuitCliente);
+	if(aPublicidad!=NULL && lenApublicidad>0 && aPantalla!=NULL && lenApantalla>0)
 	{
 		for(j=0;j<lenApublicidad;j++)
 		{
-			if(aPantalla!=NULL && lenApantalla>0 && aPublicidad!=NULL && lenApublicidad>0)
+			if((strcmp(aPublicidad[j].cuitCliente,cuitCliente)==0))
 			{
-				if(aPublicidad[j].cuitCliente == aPublicidad[indexPublicidad].cuitCliente)
+				indexPantalla = buscarPantallaPorId(aPantalla,lenApantalla,aPublicidad[j].idPantalla);
+				imprimirUnaPantallaPorId(aPantalla,lenApantalla,aPantalla[indexPantalla].id);
+				//				auxPublicidad = aPublicidad[indexPantalla];
+				retorno=0;
+			}
+		}
+		//de aca en adelante deberia ser otra funcion. darDeBajaPublicidadByCuitAndIdPantalla
+		if(getInt(&auxIdPantalla,"\nIngrese ID de la pantalla en la que se dara de baja la contratacion\n","Error\n",1,1000,2)==0)
+		{
+			indexPublicidad = buscarPublicidadPorIdPantallaYcuit(aPublicidad,lenApantalla,auxIdPantalla,cuitCliente);
+			if((getInt(&confirmaBajaContratacion,"Confirmar baja puclicidad(1)\nAbortar(0)","Error, opcion incorrecta",0,1,2)==0) &&
+					(confirmaBajaContratacion==1) &&
+					(indexPublicidad!=-1))
+			{
+				printf("baja ok");
+				aPublicidad[indexPublicidad].status = STATUS_EMPTY;
+				imprimirPublicidades(aPublicidad,lenApublicidad);//aca tiene que ser una publicidad sola
+				retorno=1;
+			}
+		}		else
+			printf("Baja no realizada!!\n");
+	}
+	return retorno;
+}
+
+
+int imprimirPantallasPorCuitConFacturacionPorPublicidad(pantalla *aPantalla,
+		                                          int lenApantalla,
+												  publicidad *aPublicidad,
+												  int lenApublicidad,
+												  char *cuitCliente)
+{
+	int retorno = -1;
+	int j;
+	int indexPublicidad;
+	int indexPantalla;
+	int auxIdPantalla;
+	float importePorContratacion;
+
+	indexPublicidad = buscarPublicidadesPorCuit(aPublicidad,lenApublicidad,cuitCliente);
+	if(aPublicidad!=NULL && lenApublicidad>0 && aPantalla!=NULL && lenApantalla>0)
+	{
+		for(j=0;j<lenApublicidad;j++)
+		{
+			if((strcmp(aPublicidad[j].cuitCliente,cuitCliente)==0))
+			{
+				indexPantalla = buscarPantallaPorId(aPantalla,lenApantalla,aPublicidad[j].idPantalla);
+				if(indexPantalla!=-1)//le falta a las funciones anteriores.
 				{
-					//indexPublicidad=buscarPublicidadesPorCuit(aPublicidad,lenApublicidad,cuitCliente);
-					if(aPublicidad[j].idPantalla == aPantalla[i].id)
-					{
-						bPantalla = aPantalla[i];
-						imprimirUnaPantalla(bPantalla);//es imprimir una pantalla
-						printf("\nrepite\n");
-						//continue;
-					}
+					importePorContratacion = aPublicidad[j].diasPublicacion * aPantalla[indexPantalla].precioPorDia;
+					imprimirUnaPublicidadConPrecio(aPublicidad[j],importePorContratacion);//agregar precio
+					retorno=0;
 				}
 			}
 		}
 	}
 	return retorno;
 }
-
-
-int mayorPrecioFacturado(pantalla *listPantalla, int lenPantalla, publicidad *listPublicidad,int lenPublicidad)
-{
-	int retorno = -1;
-	int i;
-	int j;
-	int posicionPantalla;
-	int precioTotalPublicacion;
-	struct sCliente bCliente;
-
-
-	if((listPantalla!=NULL && lenPantalla>0) && (listPublicidad!=NULL && lenPublicidad>0))
-	{
-		for(i=0;i<lenPublicidad;i++)//con posicionPantalla macheo el id pantalla de la publicacion, con la pantalla de ese id. es la conexion
-		//despues calculo el precio de esa publicidad
-		{
-			posicionPantalla = buscarPantallaPorId(listPantalla,lenPantalla,listPublicidad[i].idPantalla);
-			precioTotalPublicacion = listPublicidad[i].diasPublicacion * listPantalla[posicionPantalla].precioPorDia;
-
-		}
-	}
-	return retorno;
-}
-*/
-
-/*
-typedef struct sCliente{
-
-	char cuit[15];
-	int acumuladorFacturasApagar;
-};
-
-*/
