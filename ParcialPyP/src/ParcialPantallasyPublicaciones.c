@@ -121,11 +121,11 @@ int main(void){
 			if(listarDatosPantallaYpublicidad(bPantalla,5,bpublicidad,5)!=0)
 				printf("Error al listar!\n");
 			break;
-
-			//case 7. buscarPublicidadPOrCUit, despues calcular la facturacion
-		//(publicidad.dias contratados * pantalla.precio por dia), guardarla en sAuxiliar e imprimir el array o similar.
-			//case 8 listar contrataciones. Imprimir publicidad con los campos especificados.
-			//case 9 listar pantallas con todos sus campos.
+		case 9:
+			imprimirPantallas(bPantalla,5);//deberia imprimir activas e inactivas
+			break;
+		case 10:
+			break;
 			//case 10_1 listar cliente(estructura auxiliar cliente con contador de contrataciones y monto de cada una) o similar
 			//case 10_2 usar punto anteriror para hacer un acumulador de facturas para calcular la facturacion total por cliente y calcular maximo
 		}

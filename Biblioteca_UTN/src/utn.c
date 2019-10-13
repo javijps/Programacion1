@@ -12,8 +12,6 @@
 #define MAX_FLOAT 1000
 #define QTY_CARACTERES 50
 
-//HACER FUNCION esNombre
-
 /**
 * \brief Solicita numero entero al usuario y lo valida.
 * \param pNumero Se carga el numero ingresado.
@@ -143,7 +141,7 @@ int getChar(   char *pChar,
 		{
 
 			printf("%s",mensaje);
-			__fpurge(stdin);
+			__fpurge(stdin);//gets
 			if(scanf("%c",&buffer)==1 &&  buffer >= minimo && buffer <= maximo)
 			{
 				retorno = 0;
@@ -160,54 +158,6 @@ int getChar(   char *pChar,
 	return retorno;
 }
 
-/**
-* \brief Solicita letra al usuario y valida que la misma sea entre 'a' y 'z',tanto mayuscula como minuscula.
-* \param pChar Se carga la letra ingresada.
-* \param mensaje Mensaje a ser mostrado.
-* \param mensajeError Mensaje a ser mostrado en caso de error.
-* \param reintentos Reintentos permitidos en caso de error.
-* \return Si tuvo exito al obtener la letra [0] o si fallo [-1]
-*/
-int getLetter(   char *pChar,
-		      char *mensaje,
-			  char *mensajeError,
-			  int reintentos)
-{
-	int retorno = -1;
-	char buffer;
-	char minimoLower='a';
-	char maximoLower='z';
-	char minimoUpper='A';
-	char maximoUpper='Z';
-
-	if(     pChar != NULL &&
-			mensaje != NULL &&
-			mensajeError != NULL &&
-			reintentos>=0)
-
-	{
-		do
-		{
-
-			printf("%s",mensaje);
-			__fpurge(stdin);
-			if(scanf("%c",&buffer)==1 &&//reemplazar scanf
-					((buffer >= minimoLower && buffer <= maximoLower) ||
-					(buffer >= minimoUpper && buffer <= maximoUpper)))
-			{
-				retorno = 0;
-				*pChar = buffer;
-				break;
-
-			}
-			printf("%s",mensajeError);
-			reintentos--;
-		}while(reintentos >= 0);
-
-	}
-
-	return retorno;
-}
 /**
 * \brief Solicita  cadena de caracteres al usuario y lo valida.
 * \param pResultado Se carga la cadena ingresada.
@@ -254,179 +204,252 @@ int getString(char *pResultado,
 	return retorno;
 }
 
-
-
-//VALIDACION
-
-
 /**
-* \brief Evalua si el float recibido es entero o tiene decimales.
-* \param numero Numero flotante a ser evaluado.
-* \return Si el numero float es entero [0] o si el numero float tiene decimales [-1]
+* \Valida si el nombre esta compuesto por letras
+* \param pNombre Nombre recibido
+* \return Si valida el nombre [0] o si es invalido [-1]
 */
-/*float esDecimal(float *numero)//CORREGIR
+int esNombre(char pNombre[50])
 {
-	int retorno;
-	int numeroEntero;
-	if(numero != 0)
-	{
-		retorno = -1;
-		printf("No es decimal!");
-	}
-	else
-	{
-		printf("Es decimal!");
-		retorno = 0;
-	}
-	return retorno;
-}
-*/
-
-//ARRAY FUNCTIONS
-
-/**
-* \brief Inicializa todos los elementos de un array de enteros.
-* \param array Array a ser inicializado.
-* \param mensaje Mensaje a ser mostrado.
-* \param limite Limite del array
-* \param valor Valor utilizado para inicializar los elementos del array
-* \return Si tuvo exito al inicializar el array [0] o si fallo [-1]
-*/
-int initArrayInt(int array[],int limite,int valor)
-{
+	int retorno = -1;
 	int i;
-	int retorno = -1;
 
-	if(array != NULL && limite > 0)
-	{
-		retorno = 0;
-		for(i=0;i<limite;i++)
+	if(pNombre!=NULL)
+
+		for(i=0;pNombre[i]!='\0';i++)
 		{
-			array[i] = valor;//
-		}
-	}
-	return retorno;
-}
-/**
-* \brief Imprime todos los elementos de un array de enteros.
-* \param array Array a ser inicializado.
-* \param limite Limite del array
-* \return Si tuvo exito al imprimir el array [0] o si fallo [-1]
-*/
-int imprimeArrayInt(int array[],int limite)
-{
-	int i;
-	int retorno = -1;
-	if(array != NULL && limite > 0)
-	{
-		retorno = 0;
-		printf("\n\n-------\n");
-		for(i=0;i<limite;i++)
-		{
-			printf("%d\n",array[i]);
-		}
-
-	}
-	return retorno;
-}
-
-int imprimeArrayString(char aNombres[][50], int cantidad){
-	int i;
-	int retorno = -1;
-
-	if(aNombres != NULL && cantidad>=0)
-	{
-		retorno = 0;
-		for(i=0;i<cantidad;i++)
-		{
-			printf("Nombre: %s \n",aNombres[i]);
-		}
-	}
-	return retorno;
-}
-
-int getStringToInt(int *pResultado)//string to int
-{
-	int retorno =-1;
-	char buffer[64];
-	fgets(buffer,sizeof(buffer),stdin);
-	buffer[strlen(buffer)-1]='\0';
-/*	if(esNumerica(buffer))
-	{
-		*pResultado = atoi(buffer);
-		retorno = 1;
-
-	}*/
-	return retorno;
-}
-
-
-
-
-
-int getArrayInt(	int array[],
-					int limite,
-					char *pMensaje,
-					char *pMensajeError,
-					int minimo,
-					int maximo,
-					int reintentos)
-{
-	int i=0;
-	int buffer;
-	char respuesta = 'n';
-	int retorno = -1;
-	if(array != NULL && limite > 0)
-	{
-		do
-		{
-			if(getInt(	&buffer,
-						pMensaje,
-						pMensajeError,
-						minimo,
-						maximo,
-						reintentos) == 0)
-
+			if((pNombre[i] >= 'a' && pNombre[i] <= 'z') ||
+					(pNombre[i] >= 'A' && pNombre[i] <= 'Z') ||
+					(pNombre[i]== ' '))
 			{
-				array[i] = buffer;
+				retorno = 0;
 				i++;
-				limite--;
 			}
-			printf("Continuar? (s/n)");
-			__fpurge(stdin);
-			scanf("%c",&respuesta);
-		}while(respuesta == 's' && limite > 0);
-		retorno = i;
-	}
+			else
+			{
+				printf("Error, los datos ingresados no corresponden a un nombre!!\n");
+				break;
+			}
+		}
 	return retorno;
 }
 
-//VALIDACION
+/**
+* \brief Solicita nombre al usuario.
+* \param pNombre Se carga el nombre ingresado.
+* \param reintentos cantidad de errores permitidos
+* \return Si tuvo exito al obtener el nombre [0] o si fallo [-1]
+*/
+int getNombre(char pNombre[49],int reintentos)
+{
+	int retorno=-1;
+
+	do
+	{
+		getString(pNombre,"Ingrese nombre\n","El nombre ingresado es incorrecto\n",1,49,3);
+		if(esNombre(pNombre)==0)
+		{
+			retorno = 0;
+			break;
+		}
+		else
+			reintentos--;
+	}while(reintentos>0);
+
+	return retorno;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /**
 * \brief Evalua si la cadena de caracteres es numerica.
 * \param cadena Array de caracteres a ser validado
-* \return Si la cadena de caracteres recibida es numerica [1] o si no lo es[-1]
+* \return Si la cadena de caracteres recibida es numerica [0] o si no lo es[-1]
 */
 
-int esNumerica(char *cadena)
+int esNumerica(char cadena[50])
 {
 	int retorno=-1;
-	int i=0;
-
-	if(cadena != NULL)
+	int i;
+	if(cadena!=NULL)
 	{
-		while(cadena[i]!= '\0')
+		while(cadena[i]!='\0')
 		{
-			if(cadena[i]<'0' || cadena[i]>'9')
+			if((cadena[i] >= '0' && cadena[i] <= '9'))
 			{
-				break;
+				retorno = 0;
 				i++;
 			}
-			if(cadena[i]=='\0')
-				retorno = 1;
+			else
+			{
+				printf("Error, los datos ingresados no corresponden a un numero!!\n");
+				break;
+			}
 		}
 	}
 	return retorno;
 }
 
+/**
+ * \brief Solicita una cadena alfanumérico al usuario y lo devuelve
+ * \param *input puntero a Array donde se cargará el texto ingresado
+ * \param reintentos reintentos permitidos ante el error al usuario
+ * \return 0 si el texto contiene solo números
+ */
+int getStringNumeros(char *input,int reintentos)
+{
+	int retorno = -1;
 
+	do
+	{
+		if(getString(input,"\nIngrese numeros \n","Numeros incorrectos\n",0,100,reintentos)==0)
+		{
+			if(esNumerica(input)==0)
+			{
+				retorno = 0;
+				break;
+			}
+			else
+			{
+				printf("Los datos ingresados no corresponden a numeros!\n");
+				reintentos--;
+			}
+		}
+	}while(reintentos>0);
+	return retorno;
+}
+
+/**
+* \brief Evalua si la cadena de caracteres es alfanumerica.
+* \param cadena Array de caracteres a ser validado
+* \return Si la cadena de caracteres recibida es alfanumerica [0] o si no lo es[-1]
+*/
+
+int esAlfaNumerica(char cadena[50])
+{
+	int retorno=-1;
+	int i;
+	if(cadena!=NULL)
+	{
+		while(cadena[i]!='\0')
+		{
+			if((cadena[i] >= '0' && cadena[i] <= '9') || (cadena[i] >= 'a' && cadena[i] <= 'z') ||
+					(cadena[i] >= 'A' && cadena[i] <= 'Z'))
+			{
+				retorno = 0;
+				i++;
+			}
+			else
+			{
+				retorno = -1;
+					break;
+			}
+		}
+	}
+	return retorno;
+}
+
+/**
+ * \brief Solicita un texto numérico al usuario y lo devuelve
+ * \param input puntero a Array donde se cargará el texto ingresado
+ * \param reintentos reintentos permitidos al usuario
+ * \return 0 si el texto es correcto -1 si no lo es
+ */
+
+int getAlfanumerica(char *input,int reintentos)
+{
+	int retorno = -1;
+
+	do
+	{
+		if(getString(input,"\nIngrese caracteres alfanumericos \n","caracteres incorrectos\n",0,100,reintentos)==0)
+		{
+			if(esAlfaNumerica(input)==0)
+			{
+				retorno = 0;
+				break;
+			}
+			else
+			{
+				printf("Los datos ingresados no corresponden a alfanumericsos!\n");
+				reintentos--;
+			}
+		}
+	}while(reintentos>0);
+	return retorno;
+}
+
+/**
+* \brief Evalua si la cadena de caracteres es alfanumerica.
+* \param cadena Array de caracteres a ser validado
+* \return Si la cadena de caracteres recibida es numerica [0] o si no lo es[-1]
+*/
+
+int esCuit(char cadena[50])
+{
+	int retorno=-1;
+	int i;
+	int contadorCaracteres=0;
+
+	if(cadena!=NULL)
+	{
+		while(cadena[i]!='\0')
+		{
+			if(cadena[i] >= '0' && cadena[i] <= '9')			{
+				retorno = 0;
+				contadorCaracteres++;
+				i++;
+			}
+			else
+			{
+				retorno = -1;
+				printf("Error, los datos ingresados no corresponden a caracteres alfannumericos!!\n");
+				break;
+			}
+		}
+		if(contadorCaracteres!=11)
+		{
+			retorno = -1;
+			printf("Cantidad de caracteres ingresados (%d) incorrecto!\nEl cuit debe contener 11 caracteres\n",contadorCaracteres);
+		}
+	}
+	return retorno;
+}
+
+/**
+ * \brief Solicita un cuit al usuario y lo devuelve
+ * \param input puntero a Array donde se cargará el cuit ingresado
+ * \param reintentos reintentos permitidos al usuario
+ * \return 0 si el cuit es correcto -1 si no lo es
+ */
+
+int getCuit(char *input,int reintentos)
+{
+	int retorno = -1;
+
+	do
+	{
+		if(getString(input,"\nIngrese cuit sin / ni - \n","No corresponde a un Cuit\n",1,111,reintentos)==0)//es 10 u 11
+		{
+			if(esCuit(input)==0)
+			{
+				retorno = 0;
+				break;
+			}
+			else
+				reintentos--;
+		}
+	}while(reintentos>0);
+	return retorno;
+}

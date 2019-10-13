@@ -19,6 +19,14 @@ typedef struct pantalla {
 	float precioPorDia;
 } pantalla;
 
+typedef struct cliente {
+
+	char cuitCliente[50];
+	int contadorPublicaciones;
+	int acumuladorFacturacion;
+} cliente;
+
+
 int initPantalla(pantalla *aPantalla, int cantidad);
 int getDatosPantalla(struct pantalla *aPantalla,int cantidad);
 int buscarPantallaLibre(pantalla *aPantalla,int cantidad);
@@ -44,7 +52,12 @@ int imprimirPantallasPorCuitConFacturacionPorPublicidad(pantalla *aPantalla,
 												  int lenApublicidad,
 												  char *cuitCliente);
 int listarDatosPantallaYpublicidad(pantalla *aPantalla,int lenApantalla,publicidad *aPublicidad,int lenApublicidad);
-
+int listarContratacionesPorCliente(pantalla *aPantalla,
+		                                          int lenApantalla,
+												  publicidad *aPublicidad,
+												  int lenApublicidad);
 void pantallaForzada(pantalla *aPantalla,int cantidad);
+
+void imprimirClienteConCuitYcontador(cliente bCliente);
 
 #endif /* PANTALLAS_H_ */

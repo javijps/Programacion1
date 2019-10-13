@@ -360,10 +360,6 @@ int getStringToInt(int *pResultado)//string to int
 	return retorno;
 }
 
-
-
-
-
 int getArrayInt(	int array[],
 					int limite,
 					char *pMensaje,

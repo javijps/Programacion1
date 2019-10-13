@@ -484,3 +484,53 @@ int listarDatosPantallaYpublicidad(pantalla *aPantalla,int lenApantalla,publicid
 	}
 	return retorno;
 }
+
+
+void imprimirClienteConCuitYcontador(cliente bCliente)
+{
+    printf("--Cuit Cliente: %s\n"
+    		" -- Cantidad de Publicaciones: %d\n",
+    		bCliente.cuitCliente,
+			bCliente.contadorPublicaciones);
+
+    //" -- Facturacion Total del Cliente: %d\n",
+    //bCliente.acumuladorFacturacion
+
+}
+
+
+int listarContratacionesPorCliente(pantalla *aPantalla,
+		                                          int lenApantalla,
+												  publicidad *aPublicidad,
+												  int lenApublicidad)
+{
+
+	cliente bCliente;
+	int retorno = -1;
+	int j;
+	int i;
+	int indexPublicidad;
+
+	if(aPublicidad!=NULL && lenApublicidad>0 && aPantalla!=NULL && lenApantalla>0)
+	{
+		for(j=0;j<lenApublicidad;j++)
+		{
+			if(aPublicidad[j].status == STATUS_NOT_EMPTY)
+			{
+				strncpy(bCliente.cuitCliente, aPublicidad[j].cuitCliente,50);
+				bCliente.contadorPublicaciones++;
+				indexPublicidad = buscarPublicidadesPorCuit(aPublicidad,lenApublicidad,aPublicidad[j].cuitCliente);
+				for(i=0;i<lenApublicidad;i++)
+				{
+					if(strncmp(aPublicidad[i].cuitCliente,bCliente.cuitCliente,50)==0)
+					{
+						bCliente.contadorPublicaciones++;
+					}
+				}
+			}
+			imprimirClienteConCuitYcontador(bCliente);
+			retorno=0;
+		}
+	}
+	return retorno;
+}
