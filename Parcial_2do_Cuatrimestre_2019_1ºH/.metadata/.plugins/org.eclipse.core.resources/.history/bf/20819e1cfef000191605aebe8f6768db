@@ -9,7 +9,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include "utn.h"
-
 #define MAX_FLOAT 1000
 #define QTY_CARACTERES 50
 
@@ -50,7 +49,6 @@ int getInt(   int *pNumero,
 			}
 			else
 			printf("%s",mensajeError);
-			//__fpurge(stdin)
 			reintentos--;
 		}while(reintentos >= 0);
 
@@ -80,9 +78,10 @@ int esInt(char *nInt)
     return retorno;
 }
 
+
 /**
-* \brief Solicita numero flotante al usuario y lo valida.
-* \param pResultado Se carga el numero ingresado.
+* \brief Solicita numero float al usuario y lo valida.
+* \param pNumero Se carga el numero ingresado.
 * \param mensaje Mensaje a ser mostrado.
 * \param mensajeError Mensaje a ser mostrado en caso de error.
 * \param minimo Limite minimo a validar.
@@ -90,61 +89,42 @@ int esInt(char *nInt)
 * \param reintentos Reintentos permitidos en caso de error.
 * \return Si tuvo exito al obtener el numero [0] o si fallo [-1]
 */
-int getFloat(float *pResultado,
-	      char *pMensaje,
-		  char *pMensajeError,
-		  int minimo,
-		  int maximo,
-		  int reintentos)
+int getFloat(   float *pNumero,
+		      char *mensaje,
+			  char *mensajeError,
+			  int minimo,
+			  int maximo,
+			  int reintentos)
 {
 	int retorno = -1;
-	char bufferStr[QTY_CARACTERES];
+	float buffer;
 
-	if(     pResultado != NULL &&
-			pMensaje != NULL &&
-			pMensajeError != NULL &&
+	if(     pNumero != NULL &&
+			mensaje != NULL &&
+			mensajeError != NULL &&
 			minimo < maximo &&
 			reintentos>=0)
 	{
 		do
 		{
-			if(getString(bufferStr,pMensaje,pMensajeError,1,QTY_CARACTERES,2)==0 &&
-					esFloat(bufferStr)==0)
+
+			printf("%s",mensaje);
+			__fpurge(stdin);
+			if((scanf("%f",&buffer)==1) && buffer >= minimo && buffer <= maximo)
 			{
 				retorno = 0;
-				*pResultado =atof(bufferStr);
+				*pNumero = buffer;
 				break;
+
 			}
-			else
-			printf("%s",pMensajeError);
+			printf("%s",mensajeError);
+			//__fpurge(stdin)
 			reintentos--;
 		}while(reintentos >= 0);
 
 	}
 
 	return retorno;
-}
-
-
-/**
-* \Valida si el nombre es flotante
-* \param nInt numero recibido
-* \return Si valida el flotante [0] o si es invalido [-1]
-*/
-int esFloat(char *nfloat)
-{
-    int retorno=-1;  // para las funciones isValid arranco con verdadero y cambio cuando encuentro un error
-    int i=0;
-
-    while(nfloat[i]!='\0')
-    {
-        if((nfloat[i]>='0' && nfloat[i]<='9') || (nfloat[i]=='.'))
-        {
-            retorno=0;
-            i++;
-        }
-    }
-    return retorno;
 }
 
 /**
@@ -229,7 +209,7 @@ int getString(char *pResultado,
 			buffer[strlen(buffer)-1] = '\0';
 			if(strlen(buffer)>=minimo && strlen(buffer)<=maximo)
 			{
-				strncpy(pResultado,buffer,maximo);
+				strncpy(pResultado,buffer,maximo+1);
 				retorno = 0;
 				break;
 			}
@@ -242,12 +222,11 @@ int getString(char *pResultado,
 }
 
 /**
- *
 * \Valida si el nombre esta compuesto por letras
 * \param pNombre Nombre recibido
 * \return Si valida el nombre [0] o si es invalido [-1]
 */
-int esNombre(char pNombre[50])
+int esNombre(char pNombre[QTY_CARACTERES])
 {
 	int retorno = -1;
 	int i;
@@ -258,6 +237,7 @@ int esNombre(char pNombre[50])
 		{
 			if((pNombre[i] >= 'a' && pNombre[i] <= 'z') ||
 					(pNombre[i] >= 'A' && pNombre[i] <= 'Z') ||
+					(pNombre[i] >= '0' && pNombre[i] <= '9') ||
 					(pNombre[i]== ' '))
 			{
 				retorno = 0;
@@ -278,33 +258,47 @@ int esNombre(char pNombre[50])
 * \param reintentos cantidad de errores permitidos
 * \return Si tuvo exito al obtener el nombre [0] o si fallo [-1]
 */
-int getNombre(char pNombre[49],int reintentos)
+int getNombreEmpresa(char pNombre[QTY_CARACTERES],int limite,int reintentos)
 {
 	int retorno=-1;
 
-	do
+	if(pNombre!=NULL && limite >0)
 	{
-		getString(pNombre,"Ingrese nombre\n","El nombre ingresado es incorrecto\n",1,49,3);
-		if(esNombre(pNombre)==0)
+		do
 		{
-			retorno = 0;
-			break;
-		}
-		else
-			reintentos--;
-	}while(reintentos>0);
-
+			getString(pNombre,"Ingrese nombre de la empresa\n","El nombre ingresado es incorrecto\n",1,49,3);
+			if(esNombre(pNombre)==0)
+			{
+				retorno = 0;
+				break;
+			}
+			else
+				reintentos--;
+		}while(reintentos>0);
+	}
 	return retorno;
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
 /**
-* \brief Evalua si la cadena de caracteres es alfanumerica.
+* \brief Evalua si la cadena de caracteres es numerica.
 * \param cadena Array de caracteres a ser validado
-* \return Si la cadena de caracteres recibida es alfanumerica [0] o si no lo es[-1]
+* \return Si la cadena de caracteres recibida es numerica [0] o si no lo es[-1]
 */
 
-int esAlfaNumerica(char cadena[50])
+int esNumerica(char cadena[QTY_CARACTERES])
 {
 	int retorno=-1;
 	int i;
@@ -312,16 +306,15 @@ int esAlfaNumerica(char cadena[50])
 	{
 		while(cadena[i]!='\0')
 		{
-			if((cadena[i] >= '0' && cadena[i] <= '9') || (cadena[i] >= 'a' && cadena[i] <= 'z') ||
-					(cadena[i] >= 'A' && cadena[i] <= 'Z'))
+			if((cadena[i] >= '0' && cadena[i] <= '9'))
 			{
 				retorno = 0;
 				i++;
 			}
 			else
 			{
-				retorno = -1;
-					break;
+				printf("Error, los datos ingresados no corresponden a un numero!!\n");
+				break;
 			}
 		}
 	}
@@ -329,28 +322,27 @@ int esAlfaNumerica(char cadena[50])
 }
 
 /**
- * \brief Solicita un texto numérico al usuario y lo devuelve
- * \param input puntero a Array donde se cargará el texto ingresado
- * \param reintentos reintentos permitidos al usuario
- * \return 0 si el texto es correcto -1 si no lo es
+ * \brief Solicita una cadena alfanumérico al usuario y lo devuelve
+ * \param *input puntero a Array donde se cargará el texto ingresado
+ * \param reintentos reintentos permitidos ante el error al usuario
+ * \return 0 si el texto contiene solo números
  */
-
-int getAlfanumerica(char *input,int reintentos)
+int getStringNumeros(char *input,int reintentos)
 {
 	int retorno = -1;
 
 	do
 	{
-		if(getString(input,"\nIngrese caracteres alfanumericos \n","caracteres incorrectos\n",0,100,reintentos)==0)
+		if(getString(input,"\nIngrese numeros \n","Numeros incorrectos\n",0,100,reintentos)==0)
 		{
-			if(esAlfaNumerica(input)==0)
+			if(esNumerica(input)==0)
 			{
 				retorno = 0;
 				break;
 			}
 			else
 			{
-				printf("Los datos ingresados no corresponden a alfanumericsos!\n");
+				printf("Los datos ingresados no corresponden a numeros!\n");
 				reintentos--;
 			}
 		}
@@ -358,23 +350,85 @@ int getAlfanumerica(char *input,int reintentos)
 	return retorno;
 }
 
-/**
-* \brief Evalua si la cadena de caracteres es alfanumerica.
-* \param cadena Array de caracteres a ser validado
-* \return Si la cadena de caracteres recibida es numerica [0] o si no lo es[-1]
-*/
 
-int esCuit(char cadena[50])
+
+/**
+* \Valida si la cadena es alfanumerica, permitiendo espacios.
+* \param pAlfanumerica Cadena recibida
+* \return Si la cadena es valida [0] o si es invalido [-1]
+*/
+int esAlfanumerico(char aAlfanumerica[QTY_CARACTERES])
+{
+	int retorno = -1;
+	int i;
+
+	if(aAlfanumerica!=NULL)
+
+		for(i=0;aAlfanumerica[i]!='\0';i++)
+		{
+			if((aAlfanumerica[i] >= 'a' && aAlfanumerica[i] <= 'z') ||
+					(aAlfanumerica[i] >= 'A' && aAlfanumerica[i] <= 'Z') ||
+					(aAlfanumerica[i] >= '0' && aAlfanumerica[i] <= '9') ||
+					(aAlfanumerica[i]== ' '))
+			{
+				retorno = 0;
+				i++;
+			}
+			else
+			{
+				printf("Error, los datos ingresados no corresponden a un nombre!!\n");
+				break;
+			}
+		}
+	return retorno;
+}
+
+/**
+* \brief Solicita input alfanumerico al usuario.
+* \param alfanumerica Se carga el alfanumerico ingresado.
+* \param reintentos cantidad de errores permitidos
+* \return Si tuvo exito al obtener el alfanumerico [0] o si fallo [-1]
+*/
+int getAlfanumerico(char alfanumerica[QTY_CARACTERES],char *mensaje,char *mensajeError,int limite,int reintentos)
 {
 	int retorno=-1;
-	int i;
+
+	if(alfanumerica!=NULL && limite >0)
+	{
+		do
+		{
+			getString(alfanumerica,mensaje,mensajeError,1,49,3);
+			if(esAlfanumerico(alfanumerica)==0)
+			{
+				retorno = 0;
+				break;
+			}
+			else
+				reintentos--;
+		}while(reintentos>0);
+	}
+	return retorno;
+}
+
+
+/**
+* \brief Evalua si la cadena de caracteres es un cuit,aceptando solo numeros y 11 caracteres.
+* \param cuit Array de caracteres a ser validado
+* \return Si la cadena de caracteres recibida es un cuit [0] o si no lo es[-1]
+*/
+
+int esCuit(char cuit[QTY_CARACTERES])
+{
+	int retorno=-1;
+	int i=0;
 	int contadorCaracteres=0;
 
-	if(cadena!=NULL)
+	if(cuit!=NULL)
 	{
-		while(cadena[i]!='\0')
+		while(cuit[i]!='\0')
 		{
-			if(cadena[i] >= '0' && cadena[i] <= '9')			{
+			if(cuit[i] >= '0' && cuit[i] <= '9')
+			{
 				retorno = 0;
 				contadorCaracteres++;
 				i++;
@@ -382,7 +436,7 @@ int esCuit(char cadena[50])
 			else
 			{
 				retorno = -1;
-				printf("Error, los datos ingresados no corresponden a caracteres alfannumericos!!\n");
+				printf("Error, los datos ingresados son incorrectos!!\n");
 				break;
 			}
 		}
@@ -397,67 +451,29 @@ int esCuit(char cadena[50])
 
 /**
  * \brief Solicita un cuit al usuario y lo devuelve
- * \param input puntero a Array donde se cargará el cuit ingresado
+ * \param cuit Array donde se cargará el cuit ingresado
+ * \param limite limite del array donde se cargará el cuit ingresado
  * \param reintentos reintentos permitidos al usuario
  * \return 0 si el cuit es correcto -1 si no lo es
  */
 
-int getCuit(char *input,int reintentos)
+int getCuit(char cuit[QTY_CARACTERES],int limite,int reintentos)
 {
-	int retorno = -1;
+	int retorno=-1;
 
-	do
+	if(cuit!=NULL && limite >0)
 	{
-		if(getString(input,"\nIngrese cuit sin / ni - \n","No corresponde a un Cuit\n",1,111,reintentos)==0)//es 10 u 11
+		do
 		{
-			if(esCuit(input)==0)
+			getString(cuit,"Ingrese Cuit, solo numeros\n","Cuit Incorrecto!\n",1,49,3);
+			if(esCuit(cuit)==0)
 			{
 				retorno = 0;
 				break;
 			}
 			else
 				reintentos--;
-		}
-	}while(reintentos>0);
+		}while(reintentos>0);
+	}
 	return retorno;
 }
-
-
-/*int getFloat(   float *pNumero,
-		      char *mensaje,
-			  char *mensajeError,
-			  int minimo,
-			  int maximo,
-			  int reintentos)
-{
-	int retorno = -1;
-	float buffer;
-
-	if(     pNumero != NULL &&
-			mensaje != NULL &&
-			mensajeError != NULL &&
-			minimo < maximo &&
-			reintentos>=0)
-	{
-		do
-		{
-
-			printf("%s",mensaje);
-			__fpurge(stdin);
-			if((scanf("%f",&buffer)==1) && buffer >= minimo && buffer <= maximo)
-			{
-				retorno = 0;
-				*pNumero = buffer;
-				break;
-
-			}
-			printf("%s",mensajeError);
-			//__fpurge(stdin)
-			reintentos--;
-
-		}while(reintentos >= 0);
-
-	}
-
-	return retorno;
-}*/

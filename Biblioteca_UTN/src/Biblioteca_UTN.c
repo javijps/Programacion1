@@ -16,7 +16,12 @@
 
 int main(void) {
 
-	int id;
+	int ffloat;
+
+	if(getInt(&ffloat,"ingrese","error",0,1000,3)==0)
+		printf("int %d",ffloat);
+	else
+		printf("no anduvo");
 
 	return EXIT_SUCCESS;
 }
