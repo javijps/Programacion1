@@ -41,19 +41,17 @@ int getLetra(char *pChar,
 			  char *pMensajeError,
 			  int reintentos);
 int esLetra(char character);
-
-
-
-
 int esNombre(char *pNombre);
-int getNombre(char *pNombre,int reintentos);
-int getStringNumeros(char *input,int reintentos);
+int getNombre(char *pNombre,char *pMensaje,char *pMensajeError,int reintentos);
 int esNumerica(char *cadena);
 int esAlfaNumerica(char *cadena);
-int getAlfanumerica(char *input,int reintentos);
+int getAlfanumerica(char *input,char *pMensaje,char *pMensajeError,int reintentos);
 int esCuit(char *cadena);
-int getCuit(char *input,int reintentos);
+int getCuit(char *input,char *pMensaje,char *pMensajeError,int reintentos);
 
+
+int getstringToInt(int *enteroRetorno,char *pString,char *pMensaje,char *pMensajeError,int len,int reintentos);
+int getstringToFloat(float *flotanteRetorno,char *pString,char *pMensaje,char *pMensajeError,int len,int reintentos);
 
 
 

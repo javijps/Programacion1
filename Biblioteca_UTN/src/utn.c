@@ -77,6 +77,7 @@ int esInt(char *nInt)
     	}
     	else
     	{
+    	  	printf("no es numero\n");
     		retorno = -1;
     		break;
     	}
@@ -295,31 +296,35 @@ int esNombre(char *pNombre)
 * \param reintentos cantidad de errores permitidos
 * \return Si tuvo exito al obtener el nombre [0] o si fallo [-1]
 */
-int getNombre(char *pNombre,int reintentos)
+int getNombre(char *pNombre,char *pMensaje,char *pMensajeError,int reintentos)
 {
 	int retorno=-1;
-
-	do
+	if(pNombre != NULL &&
+			pMensaje != NULL &&
+			pMensajeError != NULL &&
+			reintentos >=0)
 	{
-		getString(pNombre,"Ingrese nombre\n","El nombre ingresado es incorrecto\n",1,49,3);
-		if(esNombre(pNombre)==0)
+		do
 		{
-			retorno = 0;
-			break;
-		}
-		else
-			reintentos--;
-	}while(reintentos>0);
-
+			getString(pNombre,pMensaje,pMensajeError,1,49,3);
+			if(esNombre(pNombre)==0)
+			{
+				retorno = 0;
+				break;
+			}
+			else
+				reintentos--;
+		}while(reintentos>0);
+	}
 	return retorno;
 }
 
 
 /**
-* \brief Evalua si la cadena de caracteres es alfanumerica.
-* \param cadena Array de caracteres a ser validado
-* \return Si la cadena de caracteres recibida es alfanumerica [0] o si no lo es[-1]
-*/
+ * \brief Evalua si la cadena de caracteres es alfanumerica.
+ * \param cadena Array de caracteres a ser validado
+ * \return Si la cadena de caracteres recibida es alfanumerica [0] o si no lo es[-1]
+ */
 
 int esAlfaNumerica(char *cadena)
 {
@@ -352,26 +357,32 @@ int esAlfaNumerica(char *cadena)
  * \return 0 si el texto es correcto -1 si no lo es
  */
 
-int getAlfanumerica(char *input,int reintentos)
+int getAlfanumerica(char *pAlfanumerica,char *pMensaje,char *pMensajeError,int reintentos)
 {
 	int retorno = -1;
 
-	do
+	if(pAlfanumerica != NULL &&
+			pMensaje != NULL &&
+			pMensajeError != NULL &&
+			reintentos >=0)
 	{
-		if(getString(input,"\nIngrese caracteres alfanumericos \n","caracteres incorrectos\n",0,100,reintentos)==0)
+		do
 		{
-			if(esAlfaNumerica(input)==0)
+			if(getString(pAlfanumerica,pMensaje,pMensajeError,0,100,reintentos)==0)
 			{
-				retorno = 0;
-				break;
+				if(esAlfaNumerica(pAlfanumerica)==0)
+				{
+					retorno = 0;
+					break;
+				}
+				else
+				{
+					printf(pMensajeError);
+					reintentos--;
+				}
 			}
-			else
-			{
-				printf("Los datos ingresados no corresponden a alfanumericsos!\n");
-				reintentos--;
-			}
-		}
-	}while(reintentos>0);
+		}while(reintentos>0);
+	}
 	return retorno;
 }
 
@@ -391,7 +402,7 @@ int esCuit(char *cadena)
 	{
 		while(cadena[i]!='\0')
 		{
-			if(cadena[i] >= '0' && cadena[i] <= '9')			{
+			if((cadena[i] >= '0' && cadena[i] <= '9')|| cadena[i] == '-' )			{
 				retorno = 0;
 				contadorCaracteres++;
 				i++;
@@ -399,11 +410,11 @@ int esCuit(char *cadena)
 			else
 			{
 				retorno = -1;
-				printf("Error, los datos ingresados no corresponden a caracteres alfannumericos!!\n");
+				printf("Error, los datos ingresados no corresponden a caracteres de un cuit!!\n");
 				break;
 			}
 		}
-		if(contadorCaracteres!=11)
+		if(contadorCaracteres!=13)
 		{
 			retorno = -1;
 			printf("Cantidad de caracteres ingresados (%d) incorrecto!\nEl cuit debe contener 11 caracteres\n",contadorCaracteres);
@@ -419,22 +430,88 @@ int esCuit(char *cadena)
  * \return 0 si el cuit es correcto -1 si no lo es
  */
 
-int getCuit(char *input,int reintentos)
+int getCuit(char *input,char *pMensaje,char *pMensajeError,int reintentos)
 {
 	int retorno = -1;
 
-	do
+	if(input != NULL &&
+			pMensaje != NULL &&
+			pMensajeError != NULL &&
+			reintentos >=0)
 	{
-		if(getString(input,"\nIngrese cuit sin / ni - \n","No corresponde a un Cuit\n",1,111,reintentos)==0)//es 10 u 11
+		do
 		{
-			if(esCuit(input)==0)
+			if(getString(input,"\nIngrese cuit sin / ni - \n","No corresponde a un Cuit\n",1,111,reintentos)==0)//es 10 u 11
 			{
+				if(esCuit(input)==0)
+				{
+					retorno = 0;
+					break;
+				}
+				else
+					reintentos--;
+			}
+		}while(reintentos>0);
+	}
+	return retorno;
+}
+
+
+
+
+
+int getstringToInt(int *enteroRetorno,char *pString,char *pMensaje,char *pMensajeError,int len,int reintentos)
+{
+	int retorno = -1;
+
+	if(pString != NULL &&
+			pMensaje != NULL &&
+			pMensajeError != NULL &&
+			len>0 &&
+			reintentos >=0)
+	{
+		do
+		{
+			if(getString(pString,pMensaje,pMensaje,1,50,reintentos)==0 && esInt(pString)==0)
+				{
+					*enteroRetorno =atoi(pString);
+					retorno = 0;
+					break;
+				}
+				else
+				{
+					printf(pMensajeError);
+					reintentos--;
+				}
+		}while(reintentos>0);
+	}
+	return retorno;
+}
+
+int getstringToFloat(float *flotanteRetorno,char *pString,char *pMensaje,char *pMensajeError,int len,int reintentos)
+{
+	int retorno = -1;
+
+	if(pString != NULL &&
+			pMensaje != NULL &&
+			pMensajeError != NULL &&
+			len>0 &&
+			reintentos >=0)
+	{
+		do
+		{
+			if(getString(pString,pMensaje,pMensaje,1,50,reintentos)==0 && esFloat(pString)==0)
+			{
+				*flotanteRetorno =atof(pString);
 				retorno = 0;
 				break;
 			}
 			else
+			{
+				printf(pMensajeError);
 				reintentos--;
-		}
-	}while(reintentos>0);
+			}
+		}while(reintentos>0);
+	}
 	return retorno;
 }

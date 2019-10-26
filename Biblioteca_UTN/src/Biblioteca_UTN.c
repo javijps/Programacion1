@@ -16,10 +16,11 @@
 
 int main(void) {
 
-	char letra;
+	char cadena[50];
+	float bufferFloat;
 
-	if(getLetra(&letra,"Ingrese letra\n","No es una letra\n",3)==0)
-		printf("%c",letra);
+	if(getstringToFloat(&bufferFloat,cadena,"Ingrese numero f","No corresponde a un numero f!\n",50,3)==0)
+		printf("%.2f",bufferFloat);
 
 	return EXIT_SUCCESS;
 }
