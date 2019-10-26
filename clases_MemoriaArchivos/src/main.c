@@ -41,7 +41,7 @@ int main(void)
 			//			cargar los campos con los datos
 			//			guardar la direccion en el array de punteros
 			//el id lo tomo como string y lo paso a numero
-			sCliente* cliente = cli_new_ClienteParametros(var1,var2,var3,var4);//pongo las variables en el orden q corre
+			//sCliente* cliente = cli_new_ClienteParametros(var1,var2,var3,var4);//pongo las variables en el orden q corre
 			//tengo q agregar id a las funciones
 		}
 		else
