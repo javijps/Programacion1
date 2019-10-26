@@ -50,7 +50,6 @@ int getInt(   int *pNumero,
 			}
 			else
 			printf("%s",mensajeError);
-			//__fpurge(stdin)
 			reintentos--;
 		}while(reintentos >= 0);
 
@@ -66,16 +65,21 @@ int getInt(   int *pNumero,
 */
 int esInt(char *nInt)
 {
-    int retorno=-1;  // para las funciones isValid arranco con verdadero y cambio cuando encuentro un error
+    int retorno=-1;
     int i=0;
 
     while(nInt[i]!='\0')
     {
-        if((nInt[i]>='0' && nInt[i]<='9') || (nInt[i]=='.'))
-        {
-            retorno=0;
-            i++;
-        }
+    	if(nInt[i]>='0' && nInt[i]<='9')
+    	{
+    		i++;
+    		retorno=0;
+    	}
+    	else
+    	{
+    		retorno = -1;
+    		break;
+    	}
     }
     return retorno;
 }
@@ -108,18 +112,16 @@ int getFloat(float *pResultado,
 	{
 		do
 		{
-			if(getString(bufferStr,pMensaje,pMensajeError,1,QTY_CARACTERES,2)==0 &&
-					esFloat(bufferStr)==0)
-			{
-				retorno = 0;
-				*pResultado =atof(bufferStr);
-				break;
-			}
-			else
-			printf("%s",pMensajeError);
+			if(getString(bufferStr,pMensaje,pMensajeError,1,QTY_CARACTERES,2)==0 && esFloat(bufferStr)==0)
+				{
+					retorno = 0;
+					*pResultado =atof(bufferStr);
+					break;
+				}
+				else
+					printf(pMensajeError);
 			reintentos--;
 		}while(reintentos >= 0);
-
 	}
 
 	return retorno;
@@ -133,17 +135,42 @@ int getFloat(float *pResultado,
 */
 int esFloat(char *nfloat)
 {
-    int retorno=-1;  // para las funciones isValid arranco con verdadero y cambio cuando encuentro un error
+    int retorno=-1;
     int i=0;
 
     while(nfloat[i]!='\0')
     {
-        if((nfloat[i]>='0' && nfloat[i]<='9') || (nfloat[i]=='.'))
-        {
-            retorno=0;
-            i++;
-        }
+    	if((nfloat[i]>='0' && nfloat[i]<='9') || (nfloat[i]=='.'))
+    	{
+    		i++;
+    		retorno=0;
+    	}
+    	else
+    	{
+    		retorno = -1;
+    		break;
+    	}
     }
+    return retorno;
+}
+
+
+/**
+* \Valida si el caracter es una letra
+* \param nInt numero recibido
+* \return Si valida el flotante [0] o si es invalido [-1]
+*/
+int esLetra(char character)
+{
+    int retorno=-1;
+
+    if((character >= 'a' && character <= 'z') ||
+    		(character >= 'A' && character <= 'Z'))
+    	{
+    		retorno=0;
+    	}
+    	else
+    		retorno = -1;
     return retorno;
 }
 
@@ -157,67 +184,57 @@ int esFloat(char *nfloat)
 * \param reintentos Reintentos permitidos en caso de error.
 * \return Si tuvo exito al obtener el caracter [0] o si fallo [-1]
 */
-int getChar(   char *pChar,
-		      char *mensaje,
-			  char *mensajeError,
-			  int minimo,
-			  int maximo,
+int getLetra(   char *pChar,
+		      char *pMensaje,
+			  char *pMensajeError,
 			  int reintentos)
 {
 	int retorno = -1;
-	char buffer;
-
-	if(     pChar != NULL &&
-			mensaje != NULL &&
-			mensajeError != NULL &&
-			minimo < maximo &&
+	char bufferChar;
+	if(pChar != NULL &&
+			pMensaje != NULL &&
+			pMensajeError != NULL &&
 			reintentos>=0)
-
 	{
 		do
 		{
-
-			printf("%s",mensaje);
-			__fpurge(stdin);//gets
-			if(scanf("%c",&buffer)==1 &&  buffer >= minimo && buffer <= maximo)
+			if(getString(&bufferChar,pMensaje,pMensajeError,1,1,2)==0 && esLetra(bufferChar)==0)
 			{
 				retorno = 0;
-				*pChar = buffer;
+				*pChar =bufferChar;
 				break;
-
 			}
-			printf("%s",mensajeError);
+			else
+				printf(pMensajeError);
 			reintentos--;
 		}while(reintentos >= 0);
-
 	}
-
 	return retorno;
 }
 
 /**
-* \brief Solicita  cadena de caracteres al usuario y lo valida.
-* \param pResultado Se carga la cadena ingresada.
-* \param mensaje Mensaje a ser mostrado.
-* \param mensajeError Mensaje a ser mostrado en caso de error.
-* \param minimo Limite minimo a validar.
-* \param maximo Limite maximo a validar.
-* \param reintentos Reintentos permitidos en caso de error.
-* \return Si tuvo exito al obtener la cadena [0] o si fallo [-1]
-*/
+ * \brief Solicita  cadena de caracteres al usuario y lo valida.
+ * \param pResultado Se carga la cadena ingresada.
+ * \param mensaje Mensaje a ser mostrado.
+ * \param mensajeError Mensaje a ser mostrado en caso de error.
+ * \param minimo Limite minimo a validar.
+ * \param maximo Limite maximo a validar.
+ * \param reintentos Reintentos permitidos en caso de error.
+ * \return Si tuvo exito al obtener la cadena [0] o si fallo [-1]
+ */
 int getString(char *pResultado,
-		      char *pMensaje,
-			  char *pMensajeError,
-			  int minimo,
-			  int maximo,
-			  int reintentos)
+		char *pMensaje,
+		char *pMensajeError,
+		int minimo,
+		int maximo,
+		int reintentos)
 {
 	int retorno = -1;
 	char buffer[4098];
 
 	if(pResultado != NULL &&
-	   pMensaje != NULL &&
-	   pMensajeError != NULL &&
+			pMensaje != NULL &&
+			pMensajeError != NULL &&
 	   minimo <= maximo &&
 	   reintentos >=0)
 	{
@@ -247,7 +264,7 @@ int getString(char *pResultado,
 * \param pNombre Nombre recibido
 * \return Si valida el nombre [0] o si es invalido [-1]
 */
-int esNombre(char pNombre[50])
+int esNombre(char *pNombre)
 {
 	int retorno = -1;
 	int i;
@@ -278,7 +295,7 @@ int esNombre(char pNombre[50])
 * \param reintentos cantidad de errores permitidos
 * \return Si tuvo exito al obtener el nombre [0] o si fallo [-1]
 */
-int getNombre(char pNombre[49],int reintentos)
+int getNombre(char *pNombre,int reintentos)
 {
 	int retorno=-1;
 
@@ -304,7 +321,7 @@ int getNombre(char pNombre[49],int reintentos)
 * \return Si la cadena de caracteres recibida es alfanumerica [0] o si no lo es[-1]
 */
 
-int esAlfaNumerica(char cadena[50])
+int esAlfaNumerica(char *cadena)
 {
 	int retorno=-1;
 	int i;
@@ -364,7 +381,7 @@ int getAlfanumerica(char *input,int reintentos)
 * \return Si la cadena de caracteres recibida es numerica [0] o si no lo es[-1]
 */
 
-int esCuit(char cadena[50])
+int esCuit(char *cadena)
 {
 	int retorno=-1;
 	int i;
@@ -421,43 +438,3 @@ int getCuit(char *input,int reintentos)
 	}while(reintentos>0);
 	return retorno;
 }
-
-
-/*int getFloat(   float *pNumero,
-		      char *mensaje,
-			  char *mensajeError,
-			  int minimo,
-			  int maximo,
-			  int reintentos)
-{
-	int retorno = -1;
-	float buffer;
-
-	if(     pNumero != NULL &&
-			mensaje != NULL &&
-			mensajeError != NULL &&
-			minimo < maximo &&
-			reintentos>=0)
-	{
-		do
-		{
-
-			printf("%s",mensaje);
-			__fpurge(stdin);
-			if((scanf("%f",&buffer)==1) && buffer >= minimo && buffer <= maximo)
-			{
-				retorno = 0;
-				*pNumero = buffer;
-				break;
-
-			}
-			printf("%s",mensajeError);
-			//__fpurge(stdin)
-			reintentos--;
-
-		}while(reintentos >= 0);
-
-	}
-
-	return retorno;
-}*/

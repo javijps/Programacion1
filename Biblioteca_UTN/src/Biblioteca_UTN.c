@@ -16,12 +16,10 @@
 
 int main(void) {
 
-	int ffloat;
+	char letra;
 
-	if(getInt(&ffloat,"ingrese","error",0,1000,3)==0)
-		printf("int %d",ffloat);
-	else
-		printf("no anduvo");
+	if(getLetra(&letra,"Ingrese letra\n","No es una letra\n",3)==0)
+		printf("%c",letra);
 
 	return EXIT_SUCCESS;
 }
