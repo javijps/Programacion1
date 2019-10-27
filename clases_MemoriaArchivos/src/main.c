@@ -19,14 +19,14 @@
 
 int main(void)
 {
+    struct sDAta array[16];
+    int len = loadDataFile("dict.txt",array,16);
+    int i;
 
+    for(i=0; i<len;i++)
+        printf("%s = %s\r\n",array[i].key,array[i].value);
 
-	char* pName = getDynamicString("Ingresa tu nombre\n");
-
-	printf("Tu nombre es %s",pName);
-
-	free(pName);
-	exit(EXIT_SUCCESS);
+    return 0;
 }
 
 

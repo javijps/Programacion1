@@ -27,8 +27,23 @@ int funcionTres(int array[],int len);
 int funcionCuatro(int array[],int len);
 
 int loadPerson(sPersonaPunteros* pPerson);
-void printPerson(sPersonaPunteros* pPerson);
 char* getDynamicString(char* messagge);
 
+
+
+
+struct sDAta{
+
+	char* key;
+	char* value;
+
+}typedef sData;
+
+sData* ped_new_Data();
+void ped_deleteData(sData* this);
+int ped_setKey(sData* this,char* key);
+int ped_setValue(sData* this,char* value);
+
+int loadDataFile(char* fileName,sData* array, int arrayLen);
 
 #endif /* EJERCICIOSPUNTEROS_H_ */
