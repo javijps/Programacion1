@@ -7,17 +7,32 @@
  Description : Hello World in C, Ansi-style
  ============================================================================
  */
-//ver codigo de la clase
 #include <stdio.h>
 #include <stdlib.h>
-#include "persona.h"
+#include <string.h>
+#include "scliente.h"
+#include "ejercicios.h"
+#include "utn.h"
 
 
 //el array de punteros se inicializa con todas lasd irecciones en NULL
 
 int main(void)
 {
-	sCliente* aCliente[1000];
+
+
+	char* pName = getDynamicString("Ingresa tu nombre\n");
+
+	printf("Tu nombre es %s",pName);
+
+	free(pName);
+	exit(EXIT_SUCCESS);
+}
+
+
+
+
+/*	sCliente* aCliente[1000];
 
 	FILE *pFile;
 	int r;
@@ -50,5 +65,4 @@ int main(void)
 	}while(!feof(pFile));
 
 	fclose(pFile);
-	exit(EXIT_SUCCESS);
-}
+ */

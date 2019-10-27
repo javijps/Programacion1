@@ -10,10 +10,6 @@
 #include <string.h>
 #include "pedido.h"
 
-
-
-//rehacer los set si estan al reves y chequear con codigo de mauricio
-
 static int isValidIdPedido(int *idPedido)
 {
 	return 1;
@@ -46,8 +42,6 @@ static float isValidKgR3(float *kgR3)
 }
 
 
-
-
 sPedido* ped_new_Pedido()
 {
 	return malloc(sizeof(sPedido));
@@ -58,7 +52,7 @@ void ped_deletePedido(sPedido* this)
 	free(this);
 }
 
-int ped_setIdPedido(sPedido* this,int *idPedido)//esta ok
+int ped_setIdPedido(sPedido* this,int *idPedido)
 {
 	int retorno = -1;
 
@@ -106,25 +100,6 @@ int ped_getIdCliente(sPedido* this,int *idCliente)
 	return retorno;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//CHEQUEAR
-
-
-
 int ped_setkgTotales(sPedido* this,float *kgTotales)
 {
 	int retorno = -1;
@@ -148,9 +123,6 @@ int ped_getkgTotales(sPedido* this,float *kgTotales)
 	}
 	return retorno;
 }
-
-
-
 
 int ped_setkgR1(sPedido* this,float *kgR1)
 {
@@ -223,7 +195,6 @@ int ped_getkgR3(sPedido* this,float *kgR3)
 	}
 	return retorno;
 }
-
 
 sPedido cli_new_PedidoParametros(int *idPedido,int *status,int *idClienteP,float *kgTotales,float *kgR1,float *kgR2,float *kgR3)
 {

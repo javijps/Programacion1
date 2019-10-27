@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "persona.h"
+#include "scliente.h"
 
 
 static int isValidNombre(char* nombre)
@@ -166,12 +166,17 @@ sCliente cli_new_ClienteParametros(char *nombre,char *direccion,char *cuit,char 
 				cli_setLocalidad(this,localidad)==0)
 			retorno = this;
 		else
-			cli_deleteCliente(this);//funcion delete persona
+			cli_deleteCliente(this);
 	}
 	return *retorno;
 }
 
 
+void printPerson(sCliente* pCliente)
+{
+	printf("ID Cliente: %d\nNombre persona %s\nCuit: %s\n:Direccion %s\n,Localidad %s\n",
+			pCliente->idCliente,pCliente->nombre,pCliente->cuit,pCliente->direccion,pCliente->localidad);
+}
 
 
 

@@ -37,6 +37,6 @@ int cli_getLocalidad(sCliente* this,char* localidad);
 
 sCliente cli_new_ClienteParametros(char *nombre,char *direccion,char *cuit,char *localidad);
 
-
+void printPerson(sCliente* pCliente);
 
 #endif /* PERSONA_H_ */
