@@ -15,21 +15,46 @@
 #include "utn.h"
 
 
-//el array de punteros se inicializa con todas lasd irecciones en NULL
-
 int main(void)
 {
-    struct sDAta array[16];
+	sPeople p;
+	int option;
+
+	do
+	{
+	peo_loadDataPeople(&p);
+		peo_savePeople(&p);
+		getInt(&option,"Ingresar uno nuevo? 1-s\n2-n\n","Incorrecto!\n",1,3,2);
+
+	}while(option==1);
+
+	char surnameToFind[32];
+	getNombre(surnameToFind,"Ingrese archivo a encontrar en el archivo\n","Los datos no corresponden a un apellido!\n",2);
+
+	sPeople* pFound = peo_readPeople(surnameToFind);
+
+	if(pFound!=NULL)
+	{
+		printf("Se encontro: nombre %s apellido %s edad: %d\r\n",pFound->namePeople,pFound->surnamePeople,pFound->agePeople);
+		peo_deletePeople(pFound);
+	}
+	else
+		printf("EL archivo no fue encontrado en el archivo!\n");
+
+	return 0;
+}
+
+
+
+
+/*    struct sDAta array[16];
     int len = loadDataFile("dict.txt",array,16);
     int i;
 
     for(i=0; i<len;i++)
         printf("%s = %s\r\n",array[i].key,array[i].value);
-
-    return 0;
-}
-
-
+ *
+ */
 
 
 /*	sCliente* aCliente[1000];

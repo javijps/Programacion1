@@ -46,4 +46,32 @@ int ped_setValue(sData* this,char* value);
 
 int loadDataFile(char* fileName,sData* array, int arrayLen);
 
+
+
+
+
+typedef struct
+{
+	char namePeople[32];
+	char surnamePeople[32];
+	int agePeople;
+
+}sPeople;
+
+sPeople* peo_new_People();
+void peo_deletePeople(sPeople* this);
+int peo_setNamePeople(sPeople* this,char* name);
+int peo_getNamePeople(sPeople* this,char* name);
+int peo_setSursurnamePeople(sPeople* this,char* surname);
+int peo_setSurnamePeople(sPeople* this,char* surname);
+int peo_setAgePeople(sPeople* this,int* age);
+int peo_getAgePeople(sPeople* this,int* age);
+sPeople peo_new_PeopleParametros(char* namePeople,char* surnamePeople,int *agePeople);
+
+void peo_loadDataPeople(sPeople* p);
+
+int peo_savePeople(sPeople *p);
+sPeople* peo_readPeople(char* surnamePeople);
+
+
 #endif /* EJERCICIOSPUNTEROS_H_ */
