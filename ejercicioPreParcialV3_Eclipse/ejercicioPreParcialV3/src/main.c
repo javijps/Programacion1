@@ -22,22 +22,23 @@
     original pero con una columna mas al final, en donde se indicara el sueldo calculado.
 */
 
-int generarArchivoSueldos(char* fileName,LinkedList* listaEmpleados);
 
 int main()
 {
     // Definir lista de empleados
-    LinkedList* listaEmpleados;
+    LinkedList* listaEmpleados = ll_newLinkedList();
 
     // Crear lista empledos
     //...
 
     // Leer empleados de archivo data.csv
-    if(parser_parseEmpleados("data.csv",listaEmpleados)==1)
+    if(controller_loadFromText("data.csv",listaEmpleados)==0)
     {
+    	controller_ListEmployee(listaEmpleados);
         // Calcular sueldos
         printf("Calculando sueldos de empleados\n");
- //       al_map(listaEmpleados,em_calcularSueldo);
+        controller_CalcularSueldo(listaEmpleados);
+        controller_ListEmployee(listaEmpleados);
 
         // Generar archivo de salida
         if(generarArchivoSueldos("sueldos.csv",listaEmpleados)==1)
@@ -54,7 +55,3 @@ int main()
     return 0;
 }
 
-int generarArchivoSueldos(char* fileName,LinkedList* listaEmpleados)
-{
-    return 1;
-}

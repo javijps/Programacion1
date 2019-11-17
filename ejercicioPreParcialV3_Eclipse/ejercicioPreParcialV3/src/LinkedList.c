@@ -615,7 +615,7 @@ int ll_map(LinkedList* this, void (*pFunc)(void*))
     	for(i=0;i<llLen;i++)
     	{
     		pNode1 = ll_get(this,i);
-    		pFunc(pNode1);//imprimir un elemento
+    		pFunc(pNode1);
     		ll_set(this,i,pNode1);
     	}
     	returnAux = 0;
