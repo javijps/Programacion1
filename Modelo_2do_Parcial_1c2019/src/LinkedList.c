@@ -886,6 +886,22 @@ int controller_pruebaFilter(LinkedList* pArrayListEmployee)
 
 
 */
+int ll_count(LinkedList* this, int (*pFunc)(void*))
+{
+    int returnAux =-1;
+    Node* pNode1;
+    int i;
+    int llLen = ll_len(this);
+    int contador = 0;
 
-
-
+    if(this!=NULL && pFunc!=NULL)
+    {
+    	for(i=0;i<llLen;i++)
+    	{
+    		pNode1 = ll_get(this,i);
+    		contador += pFunc(pNode1);
+    	}
+    	returnAux = contador;
+    }
+    return returnAux;
+}
