@@ -566,3 +566,208 @@ int ll_sort(LinkedList* this, int (*pFunc)(void* ,void*), int order)
     }
     return returnAux;
 }
+
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//int emp_filterEmployeeById(void* employee) //FUNCION CRITERIO PARA FILTRAR EMPLEADOS POR ID
+//{
+//	int bEmployee_id = ((Employee*)employee)->id;
+//
+//	if(bEmployee_id>=950 && bEmployee_id<=1000)
+//	{
+//		return 1;
+//	}
+//	else
+//		return 0;
+//
+//	return -1;
+//}
+//
+//
+//
+//ITERA EN LL, ACCEDE A CADA ELEMENTO ASOCIADO A UN NODO, HACE LO QUE LE PASE LA FUNCION CRITERIO Y LO SETEA
+//int ll_map(LinkedList* this, void (*pFunc)(void*))
+//{
+//    int returnAux =-1;
+//    Node* pNode1;
+//    int i;
+//    int llLen = ll_len(this);
+//
+//    if(this!=NULL && pFunc!=NULL)
+//    {
+//    	for(i=0;i<llLen;i++)
+//    	{
+//    		pNode1 = ll_get(this,i);
+//    		pFunc(pNode1);//imprimir un elemento
+//    		ll_set(this,i,pNode1);
+//    	}
+//    	returnAux = 0;
+//    }
+//    return returnAux;
+//}
+//
+//
+//
+////CREA UNA LISTA NUEVA,ITERA LA ORGIGINAL Y LE APLICA UNCA FUNCION CRITERIO, SI LO COMPUE(O NO, DEPENDE LO Q SEA),
+//AGARRA ESE ELEMENTO DE LA ORIGINAL Y LO AGREGA EN LA LISTA CLONADA
+//LinkedList* ll_filter(LinkedList* this, int (*pFunc)(void*))//1 cumple criterio -1 no
+//{
+//	int criterio;
+//	LinkedList* cloneArray=NULL;
+//    Node* pNode;
+//    int i;
+//    int llLen = ll_len(this);
+//
+//    if(this!=NULL && pFunc!=NULL)
+//    {
+//		cloneArray = ll_newLinkedList();
+//    	for(i=0;i<llLen;i++)
+//    	{
+//    		pNode = ll_get(this,i);
+//    		criterio = pFunc(pNode);//imprimir un elemento
+//    		if(criterio ==1)
+//    		{
+//    			ll_add(cloneArray,pNode);
+//    		}
+//    	}
+//    }
+//    return cloneArray;
+//}
+//
+//
+////elimina lo determinado a partir de la funcion criterio y achica la lista, hecho sobre la original
+//LinkedList* ll_reduce(LinkedList* this, int (*pFunc)(void*))//1 cumple criterio -1 no
+//{
+//	int criterio;
+//    Node* pNode;
+//    int i;
+//    int llLen = ll_len(this);
+//
+//    if(this!=NULL && pFunc!=NULL)
+//    {
+//    	for(i=0;i<llLen;i++)
+//    	{
+//    		pNode = ll_get(this,i);
+//	 		criterio = pFunc(pNode);//imprimir un elemento
+//    		if(criterio ==0)//no cumple el requisito
+//    		{
+//    			ll_remove(this,i);
+//    			i--;
+//    			size--;probar y cambiar
+//    		}
+//    	}
+//    }
+//    return this;
+//}
+//
+//
+//
+//
+////implementacion reduce
+//int controller_pruebaReduce(LinkedList* pArrayListEmployee)
+//{
+//	int retorno=-1;
+//	int lenLL;
+//
+//	lenLL = ll_len(pArrayListEmployee);
+//	if(pArrayListEmployee!=NULL && lenLL>0)
+//	{
+//
+//		pArrayListEmployee = ll_reduce(pArrayListEmployee,emp_filterEmployeeById);//1 y 0 desc
+//		if(pArrayListEmployee!=NULL)
+//		{
+//			printf("Lista reducida(criterio id entre 950 y 1000!\n");
+//			retorno = 0;
+//		}
+//	}
+//	else
+//	{
+//		printf("No existen datos cargados a filtrar!\n");
+//	}
+//	return retorno;
+//}
+//
+//
+//
+//
+//
+//
+////
+////
+////
+////
+////implementacion map
+////int controller_pruebaMap(LinkedList* pArrayListEmployee)
+////{
+////	int retorno=-1;
+////	int lenLL;
+////
+////	lenLL = ll_len(pArrayListEmployee);
+////	if(pArrayListEmployee!=NULL && lenLL>0)
+////	{
+////		ll_map(pArrayListEmployee,emp_printAemployeeIdMap);//1asc y 0 desc
+////		retorno = 0;
+////	}
+////	else
+////	{
+////		printf("No existen datos cargados a mapear!\n");
+////	}
+////	return retorno;
+////}
+////
+////
+////
+////implementacion filter
+////int controller_pruebaFilter(LinkedList* pArrayListEmployee)
+////{
+////	LinkedList* lista_Filtrada = NULL;
+////	int retorno=-1;
+////	int lenLL;
+////
+////	lenLL = ll_len(pArrayListEmployee);
+////	if(pArrayListEmployee!=NULL && lenLL>0)
+////	{
+////		lista_Filtrada = ll_filter(pArrayListEmployee,emp_filterEmployeeById);//1 y 0 desc
+////		if(lista_Filtrada!=NULL)
+////		{
+////			controller_ListEmployee(lista_Filtrada);
+////			retorno = 0;
+////		}
+////	}
+////	else
+////	{
+////		printf("No existen datos cargados a filtrar!\n");
+////	}
+////	return retorno;
+////}
+////
+//////similar a map pero cuenta a partir de la funcion criterio
+////int ll_count(LinkedList* this, int (*pFunc)(void*))
+////{
+////    int returnAux =-1;
+////    Node* pNode1;
+////    int i;
+////    int llLen = ll_len(this);
+////    int contador = 0;
+////
+////    if(this!=NULL && pFunc!=NULL)
+////    {
+////    	for(i=0;i<llLen;i++)
+////    	{
+////    		pNode1 = ll_get(this,i);
+////    		contador += pFunc(pNode1);
+////    	}
+////    	returnAux = contador;
+////    }
+////    return returnAux;
+////}
